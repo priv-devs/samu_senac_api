@@ -17,3 +17,15 @@ CREATE TABLE usuarios(
 INSERT INTO tipo_usuario (tipo) VALUES ('user');
 INSERT INTO tipo_usuario (tipo) VALUES ('admin');
 INSERT INTO tipo_usuario (tipo) VALUES ('root');
+
+CREATE TABLE noticias (
+    id_noticia SERIAL PRIMARY KEY,
+    titulo VARCHAR(150),
+    resumo TEXT NOT NULL,
+    imagem TEXT,
+    banner TEXT,
+    conteudo TEXT,
+    link TEXT,
+    categoria VARCHAR(20) NOT NULL DEFAULT 'diaria',
+    data DATE NOT NULL DEFAULT CURRENT_DATE
+);

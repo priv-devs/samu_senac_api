@@ -272,6 +272,123 @@ DELETE /users/1
 
 Quando remove com sucesso, retorna `204 No Content`.
 
+## Noticias
+
+Base da rota:
+
+```text
+/api/noticias
+```
+
+### Buscar noticia principal
+
+```http
+GET /api/noticias/principal
+```
+
+### Criar noticia principal
+
+```http
+POST /api/noticias/principal
+```
+
+Body:
+
+```json
+{
+  "titulo": "Titulo da noticia",
+  "resumo": "Resumo sobre a noticia",
+  "imagem": "url_do_banner",
+  "conteudo": "Conteudo completo"
+}
+```
+
+### Listar noticias secundarias
+
+```http
+GET /api/noticias/secundarias?limite=4&pagina=1
+```
+
+### Criar noticia secundaria
+
+```http
+POST /api/noticias/secundarias
+```
+
+Body:
+
+```json
+{
+  "resumo": "Resumo sobre a noticia",
+  "imagem": "url_thumbnail",
+  "link": "/noticia/1"
+}
+```
+
+### Atualizar noticia secundaria
+
+```http
+PUT /api/noticias/secundarias/1
+```
+
+### Remover noticia secundaria
+
+```http
+DELETE /api/noticias/secundarias/1
+```
+
+### Listar noticias diarias
+
+```http
+GET /api/noticias?pagina=1&por_pagina=10
+```
+
+### Criar noticia diaria
+
+```http
+POST /api/noticias
+```
+
+Body:
+
+```json
+{
+  "titulo": "Titulo da noticia",
+  "resumo": "Resumo da noticia",
+  "banner": "url_do_banner",
+  "conteudo": "Conteudo completo em HTML",
+  "categoria": "diaria"
+}
+```
+
+### Atualizar noticia diaria
+
+```http
+PUT /api/noticias/1
+```
+
+### Atualizar parcialmente
+
+```http
+PATCH /api/noticias/1
+```
+
+Body:
+
+```json
+{
+  "resumo": "Atualizar apenas o resumo"
+}
+```
+
+### Remover noticia
+
+```http
+DELETE /api/noticias/1
+```
+
+Quando remove com sucesso, retorna `204 No Content`.
+
 ## Validacoes
 
 Alguns exemplos de erro:
@@ -318,5 +435,17 @@ CREATE TABLE IF NOT EXISTS usuarios (
     FOREIGN KEY (tipo) REFERENCES tipo_usuario(id_tipo)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
+);
+
+CREATE TABLE IF NOT EXISTS noticias (
+    id_noticia SERIAL PRIMARY KEY,
+    titulo VARCHAR(150),
+    resumo TEXT NOT NULL,
+    imagem TEXT,
+    banner TEXT,
+    conteudo TEXT,
+    link TEXT,
+    categoria VARCHAR(20) NOT NULL DEFAULT 'diaria',
+    data DATE NOT NULL DEFAULT CURRENT_DATE
 );
 ```
