@@ -1,4 +1,4 @@
-const pool = require('../../database');
+const prisma = require('../../prisma/client');
 
 class ValidationError extends Error {
     constructor(message, erros = []) {
@@ -80,92 +80,121 @@ function normalizarNoticia(dados, categoriaPadrao) {
 module.exports = class Noticias {
     async findAll(filtros = {}) {
         const { limit, offset } = normalizarPaginacao(filtros);
-        const params = [limit, offset];
-        let where = '';
 
+        const where = {};
         if (filtros.categoria) {
             validarCategoria(filtros.categoria);
-            params.push(filtros.categoria);
-            where = `WHERE categoria = $${params.length}`;
+            where.categoria = filtros.categoria;
         }
 
-        const { rows } = await pool.query(`
-            SELECT
-                id_noticia,
-                titulo,
-                resumo,
-                imagem,
-                banner,
-                conteudo,
-                link,
-                categoria,
-                data
-            FROM noticias
-            ${where}
-            ORDER BY data DESC, id_noticia DESC
-            LIMIT $1 OFFSET $2
-        `, params);
+        const noticias = await prisma.noticia.findMany({
+            where,
+            orderBy: [{ data: 'desc' }, { idNoticia: 'desc' }],
+            skip: offset,
+            take: limit,
+            select: {
+                idNoticia: true,
+                titulo: true,
+                resumo: true,
+                imagem: true,
+                banner: true,
+                conteudo: true,
+                link: true,
+                categoria: true,
+                data: true
+            }
+        });
 
-        return rows;
+        // map to old snake_case keys
+        return noticias.map((n) => ({
+            id_noticia: n.idNoticia,
+            titulo: n.titulo,
+            resumo: n.resumo,
+            imagem: n.imagem,
+            banner: n.banner,
+            conteudo: n.conteudo,
+            link: n.link,
+            categoria: n.categoria,
+            data: n.data
+        }));
     }
 
     async findPrincipal() {
-        const { rows } = await pool.query(`
-            SELECT
-                id_noticia,
-                titulo,
-                resumo,
-                COALESCE(banner, imagem) AS imagem,
-                data
-            FROM noticias
-            WHERE categoria = 'principal'
-            ORDER BY data DESC, id_noticia DESC
-            LIMIT 1
-        `);
+        const n = await prisma.noticia.findFirst({
+            where: { categoria: 'principal' },
+            orderBy: [{ data: 'desc' }, { idNoticia: 'desc' }],
+            select: {
+                idNoticia: true,
+                titulo: true,
+                resumo: true,
+                imagem: true,
+                banner: true,
+                data: true
+            }
+        });
 
-        return rows[0] || null;
+        if (!n) return null;
+
+        return {
+            id_noticia: n.idNoticia,
+            titulo: n.titulo,
+            resumo: n.resumo,
+            imagem: n.banner || n.imagem,
+            data: n.data
+        };
     }
 
     async findById(id) {
         validarId(id);
 
-        const { rows } = await pool.query(`
-            SELECT
-                id_noticia,
-                titulo,
-                resumo,
-                imagem,
-                banner,
-                conteudo,
-                link,
-                categoria,
-                data
-            FROM noticias
-            WHERE id_noticia = $1
-        `, [id]);
+        const n = await prisma.noticia.findUnique({
+            where: { idNoticia: Number(id) },
+            select: {
+                idNoticia: true,
+                titulo: true,
+                resumo: true,
+                imagem: true,
+                banner: true,
+                conteudo: true,
+                link: true,
+                categoria: true,
+                data: true
+            }
+        });
 
-        return rows[0] || null;
+        if (!n) return null;
+
+        return {
+            id_noticia: n.idNoticia,
+            titulo: n.titulo,
+            resumo: n.resumo,
+            imagem: n.imagem,
+            banner: n.banner,
+            conteudo: n.conteudo,
+            link: n.link,
+            categoria: n.categoria,
+            data: n.data
+        };
     }
 
     async create(data, categoriaPadrao = 'diaria') {
         validarNoticia({ ...data, categoria: data.categoria || categoriaPadrao });
         const noticia = normalizarNoticia(data, categoriaPadrao);
 
-        const { rows } = await pool.query(`
-            INSERT INTO noticias (titulo, resumo, imagem, banner, conteudo, link, categoria)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
-            RETURNING id_noticia
-        `, [
-            noticia.titulo,
-            noticia.resumo,
-            noticia.imagem,
-            noticia.banner,
-            noticia.conteudo,
-            noticia.link,
-            noticia.categoria
-        ]);
+        const created = await prisma.noticia.create({
+            data: {
+                titulo: noticia.titulo,
+                resumo: noticia.resumo,
+                imagem: noticia.imagem,
+                banner: noticia.banner,
+                conteudo: noticia.conteudo,
+                link: noticia.link,
+                categoria: noticia.categoria
+            },
+            select: { idNoticia: true }
+        });
 
-        return this.findById(rows[0].id_noticia);
+        return this.findById(created.idNoticia);
     }
 
     async update(id, data, categoriaPadrao = 'diaria') {
@@ -173,36 +202,26 @@ module.exports = class Noticias {
         validarNoticia({ ...data, categoria: data.categoria || categoriaPadrao });
 
         const currentNoticia = await this.findById(id);
-
-        if (!currentNoticia) {
-            return null;
-        }
+        if (!currentNoticia) return null;
 
         const noticia = normalizarNoticia(data, categoriaPadrao);
 
-        const { rows } = await pool.query(`
-            UPDATE noticias
-            SET titulo = $1,
-                resumo = $2,
-                imagem = $3,
-                banner = $4,
-                conteudo = $5,
-                link = $6,
-                categoria = $7
-            WHERE id_noticia = $8
-            RETURNING id_noticia
-        `, [
-            noticia.titulo,
-            noticia.resumo,
-            noticia.imagem,
-            noticia.banner,
-            noticia.conteudo,
-            noticia.link,
-            noticia.categoria,
-            id
-        ]);
+        const updated = await prisma.noticia.updateMany({
+            where: { idNoticia: Number(id) },
+            data: {
+                titulo: noticia.titulo,
+                resumo: noticia.resumo,
+                imagem: noticia.imagem,
+                banner: noticia.banner,
+                conteudo: noticia.conteudo,
+                link: noticia.link,
+                categoria: noticia.categoria
+            }
+        });
 
-        return this.findById(rows[0].id_noticia);
+        if (updated.count === 0) return null;
+
+        return this.findById(id);
     }
 
     async updatePartial(id, data) {
@@ -215,12 +234,9 @@ module.exports = class Noticias {
         validarNoticia(data, true);
 
         const currentNoticia = await this.findById(id);
+        if (!currentNoticia) return null;
 
-        if (!currentNoticia) {
-            return null;
-        }
-
-        return this.update(id, {
+        const merged = {
             titulo: data.titulo ?? currentNoticia.titulo,
             resumo: data.resumo ?? currentNoticia.resumo,
             imagem: data.imagem ?? currentNoticia.imagem,
@@ -228,17 +244,15 @@ module.exports = class Noticias {
             conteudo: data.conteudo ?? currentNoticia.conteudo,
             link: data.link ?? currentNoticia.link,
             categoria: data.categoria ?? currentNoticia.categoria
-        }, currentNoticia.categoria);
+        };
+
+        return this.update(id, merged, currentNoticia.categoria);
     }
 
     async deletar(id) {
         validarId(id);
 
-        const { rowCount } = await pool.query(
-            'DELETE FROM noticias WHERE id_noticia = $1',
-            [id]
-        );
-
-        return rowCount > 0;
+        const deleted = await prisma.noticia.deleteMany({ where: { idNoticia: Number(id) } });
+        return deleted.count > 0;
     }
 };

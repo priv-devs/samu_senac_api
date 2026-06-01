@@ -1,4 +1,4 @@
-const pool = require('../../database');
+const prisma = require('../../prisma/client');
 
 class ValidationError extends Error {
     constructor(message, erros = []) {
@@ -88,23 +88,33 @@ module.exports = class NoticiasDiarias {
     async findRowById(id) {
         validarId(id);
 
-        const { rows } = await pool.query(`
-            SELECT
-                id_noticia,
-                titulo,
-                resumo,
-                imagem,
-                banner,
-                conteudo,
-                link,
-                categoria,
-                data
-            FROM noticias
-            WHERE id_noticia = $1
-              AND categoria = 'diaria'
-        `, [id]);
+        const n = await prisma.noticia.findFirst({
+            where: { idNoticia: Number(id), categoria: 'diaria' },
+            select: {
+                idNoticia: true,
+                titulo: true,
+                resumo: true,
+                imagem: true,
+                banner: true,
+                conteudo: true,
+                link: true,
+                categoria: true,
+                data: true
+            }
+        });
 
-        return rows[0] || null;
+        if (!n) return null;
+        return {
+            id_noticia: n.idNoticia,
+            titulo: n.titulo,
+            resumo: n.resumo,
+            imagem: n.imagem,
+            banner: n.banner,
+            conteudo: n.conteudo,
+            link: n.link,
+            categoria: n.categoria,
+            data: n.data
+        };
     }
 
     async findAll({ pagina = 1, por_pagina = 10, ordenar = 'data_desc' } = {}) {
@@ -120,10 +130,10 @@ module.exports = class NoticiasDiarias {
         }
 
         const ordenacoes = {
-            data_desc: 'data DESC, id_noticia DESC',
-            data_asc: 'data ASC, id_noticia ASC',
-            titulo_asc: 'titulo ASC',
-            titulo_desc: 'titulo DESC'
+            data_desc: [{ data: 'desc' }, { idNoticia: 'desc' }],
+            data_asc: [{ data: 'asc' }, { idNoticia: 'asc' }],
+            titulo_asc: [{ titulo: 'asc' }],
+            titulo_desc: [{ titulo: 'desc' }]
         };
 
         if (!ordenacoes[ordenar]) {
@@ -131,20 +141,22 @@ module.exports = class NoticiasDiarias {
         }
 
         const offset = (paginaNumero - 1) * porPaginaNumero;
-        const { rows } = await pool.query(`
-            SELECT
-                id_noticia,
-                titulo,
-                resumo,
-                banner,
-                data
-            FROM noticias
-            WHERE categoria = 'diaria'
-            ORDER BY ${ordenacoes[ordenar]}
-            LIMIT $1 OFFSET $2
-        `, [porPaginaNumero, offset]);
 
-        return rows.map(formatarResumoNoticia);
+        const rows = await prisma.noticia.findMany({
+            where: { categoria: 'diaria' },
+            orderBy: ordenacoes[ordenar],
+            skip: offset,
+            take: porPaginaNumero,
+            select: { idNoticia: true, titulo: true, resumo: true, banner: true, data: true }
+        });
+
+        return rows.map((n) => ({
+            id_noticia: n.idNoticia,
+            titulo: n.titulo,
+            resumo: n.resumo,
+            banner: n.banner,
+            data: n.data
+        }));
     }
 
     async findById(id) {
@@ -155,53 +167,40 @@ module.exports = class NoticiasDiarias {
     async create({ titulo, resumo, banner, conteudo, imagem = null, link = null }) {
         validarNoticia({ titulo, resumo, banner, conteudo, imagem, link });
 
-        const { rows } = await pool.query(`
-            INSERT INTO noticias (titulo, resumo, banner, conteudo, categoria, imagem, link)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
-            RETURNING id_noticia
-        `, [
-            titulo.trim(),
-            resumo.trim(),
-            banner.trim(),
-            conteudo.trim(),
-            'diaria',
-            imagem ? imagem.trim() : null,
-            link ? link.trim() : null
-        ]);
+        const created = await prisma.noticia.create({
+            data: {
+                titulo: titulo.trim(),
+                resumo: resumo.trim(),
+                banner: banner.trim(),
+                conteudo: conteudo.trim(),
+                categoria: 'diaria',
+                imagem: imagem ? imagem.trim() : null,
+                link: link ? link.trim() : null
+            },
+            select: { idNoticia: true }
+        });
 
-        return this.findById(rows[0].id_noticia);
+        return this.findById(created.idNoticia);
     }
 
     async update(id, { titulo, resumo, banner, conteudo, imagem = null, link = null }) {
         validarId(id);
         validarNoticia({ titulo, resumo, banner, conteudo, imagem, link });
 
-        const { rows } = await pool.query(`
-            UPDATE noticias
-            SET titulo = $1,
-                resumo = $2,
-                banner = $3,
-                conteudo = $4,
-                imagem = $5,
-                link = $6
-            WHERE id_noticia = $7
-              AND categoria = 'diaria'
-            RETURNING id_noticia
-        `, [
-            titulo.trim(),
-            resumo.trim(),
-            banner.trim(),
-            conteudo.trim(),
-            imagem ? imagem.trim() : null,
-            link ? link.trim() : null,
-            id
-        ]);
+        const updated = await prisma.noticia.updateMany({
+            where: { idNoticia: Number(id), categoria: 'diaria' },
+            data: {
+                titulo: titulo.trim(),
+                resumo: resumo.trim(),
+                banner: banner.trim(),
+                conteudo: conteudo.trim(),
+                imagem: imagem ? imagem.trim() : null,
+                link: link ? link.trim() : null
+            }
+        });
 
-        if (!rows[0]) {
-            return null;
-        }
-
-        return this.findById(rows[0].id_noticia);
+        if (updated.count === 0) return null;
+        return this.findById(id);
     }
 
     async updatePartial(id, data) {
@@ -214,10 +213,7 @@ module.exports = class NoticiasDiarias {
         validarNoticia(data, true);
 
         const currentNoticia = await this.findRowById(id);
-
-        if (!currentNoticia) {
-            return null;
-        }
+        if (!currentNoticia) return null;
 
         return this.update(id, {
             titulo: data.titulo ?? currentNoticia.titulo,
@@ -232,11 +228,7 @@ module.exports = class NoticiasDiarias {
     async deletar(id) {
         validarId(id);
 
-        const { rowCount } = await pool.query(
-            "DELETE FROM noticias WHERE id_noticia = $1 AND categoria = 'diaria'",
-            [id]
-        );
-
-        return rowCount > 0;
+        const deleted = await prisma.noticia.deleteMany({ where: { idNoticia: Number(id), categoria: 'diaria' } });
+        return deleted.count > 0;
     }
 };

@@ -1,4 +1,4 @@
-const pool = require('../../database');
+const prisma = require('../../prisma/client');
 
 class ValidationError extends Error {
     constructor(message, erros = []) {
@@ -54,85 +54,81 @@ function validarDadosUsuario(dados, parcial = false) {
 
 module.exports = class Users {
     async findAll() {
-        const { rows } = await pool.query(`
-            SELECT
-                u.id_user,
-                u.nome_usuario,
-                u.tipo,
-                tu.tipo AS tipo_usuario,
-                u.status
-            FROM usuarios u
-            LEFT JOIN tipo_usuario tu ON tu.id_tipo = u.tipo
-            ORDER BY u.id_user ASC
-        `);
+        const rows = await prisma.usuarios.findMany({
+            orderBy: { idUser: 'asc' },
+            select: {
+                idUser: true,
+                nomeUsuario: true,
+                tipoId: true,
+                tipo: { select: { tipo: true } },
+                status: true
+            }
+        });
 
-        return rows;
+        return rows.map(r => ({
+            id_user: r.idUser,
+            nome_usuario: r.nomeUsuario,
+            tipo: r.tipoId,
+            tipo_usuario: r.tipo ? r.tipo.tipo : null,
+            status: r.status
+        }));
     }
 
     async findById(id) {
         validarId(id);
+        const r = await prisma.usuarios.findUnique({
+            where: { idUser: Number(id) },
+            select: {
+                idUser: true,
+                nomeUsuario: true,
+                senha: true,
+                tipoId: true,
+                tipo: { select: { tipo: true } },
+                status: true
+            }
+        });
 
-        const { rows } = await pool.query(`
-            SELECT
-                u.id_user,
-                u.nome_usuario,
-                u.senha,
-                u.tipo,
-                tu.tipo AS tipo_usuario,
-                u.status
-            FROM usuarios u
-            LEFT JOIN tipo_usuario tu ON tu.id_tipo = u.tipo
-            WHERE u.id_user = $1
-        `, [id]);
-
-        return rows[0] || null;
+        if (!r) return null;
+        return {
+            id_user: r.idUser,
+            nome_usuario: r.nomeUsuario,
+            senha: r.senha,
+            tipo: r.tipoId,
+            tipo_usuario: r.tipo ? r.tipo.tipo : null,
+            status: r.status
+        };
     }
 
     async findPublicById(id) {
         const user = await this.findById(id);
-
-        if (!user) {
-            return null;
-        }
-
+        if (!user) return null;
         const { senha, ...publicUser } = user;
         return publicUser;
     }
 
     async findTipoId(tipo) {
-        if (Number.isInteger(Number(tipo))) {
-            return Number(tipo);
-        }
+        if (Number.isInteger(Number(tipo))) return Number(tipo);
 
-        const { rows } = await pool.query(
-            'SELECT id_tipo FROM tipo_usuario WHERE LOWER(tipo) = LOWER($1)',
-            [tipo.trim()]
-        );
-
-        if (!rows[0]) {
-            throw new Error('TIPO_USUARIO_NOT_FOUND');
-        }
-
-        return rows[0].id_tipo;
+        const r = await prisma.tipoUsuario.findFirst({ where: { tipo: { equals: tipo.trim(), mode: 'insensitive' } }, select: { idTipo: true } });
+        if (!r) throw new Error('TIPO_USUARIO_NOT_FOUND');
+        return r.idTipo;
     }
 
     async create({ nome_usuario, senha, tipo, status }) {
         validarDadosUsuario({ nome_usuario, senha, tipo, status });
-
         const tipoId = await this.findTipoId(tipo);
 
-        const { rows } = await pool.query(`
-            INSERT INTO usuarios (nome_usuario, senha, tipo, status)
-            VALUES ($1, $2, $3, $4)
-            RETURNING id_user
-        `, [
-            nome_usuario.trim(),
-            senha,
-            tipoId,
-            status ? status.trim() : 'ativo'
-        ]);
+        const created = await prisma.usuarios.create({
+            data: {
+                nomeUsuario: nome_usuario.trim(),
+                senha,
+                tipoId,
+                status: status ? status.trim() : 'ativo'
+            },
+            select: { idUser: true }
+        });
 
-        return this.findPublicById(rows[0].id_user);
+        return this.findPublicById(created.idUser);
     }
 
     async update(id, { nome_usuario, senha, tipo, status }) {
@@ -140,50 +136,31 @@ module.exports = class Users {
         validarDadosUsuario({ nome_usuario, senha, tipo, status });
 
         const currentUser = await this.findById(id);
-
-        if (!currentUser) {
-            return null;
-        }
+        if (!currentUser) return null;
 
         const tipoId = await this.findTipoId(tipo);
 
-        const { rows } = await pool.query(`
-            UPDATE usuarios
-            SET nome_usuario = $1,
-                senha = $2,
-                tipo = $3,
-                status = $4
-            WHERE id_user = $5
-            RETURNING id_user
-        `, [
-            nome_usuario.trim(),
-            senha,
-            tipoId,
-            status ? status.trim() : currentUser.status,
-            id
-        ]);
+        const updated = await prisma.usuarios.updateMany({
+            where: { idUser: Number(id) },
+            data: {
+                nomeUsuario: nome_usuario.trim(),
+                senha,
+                tipoId,
+                status: status ? status.trim() : currentUser.status
+            }
+        });
 
-        if (!rows[0]) {
-            return null;
-        }
-
-        return this.findPublicById(rows[0].id_user);
+        if (updated.count === 0) return null;
+        return this.findPublicById(id);
     }
 
     async updatePartial(id, data) {
         validarId(id);
-
-        if (!Object.keys(data).length) {
-            throw new ValidationError('Informe ao menos um campo');
-        }
-
+        if (!Object.keys(data).length) throw new ValidationError('Informe ao menos um campo');
         validarDadosUsuario(data, true);
 
         const currentUser = await this.findById(id);
-
-        if (!currentUser) {
-            return null;
-        }
+        if (!currentUser) return null;
 
         return this.update(id, {
             nome_usuario: data.nome_usuario ?? currentUser.nome_usuario,
@@ -195,12 +172,7 @@ module.exports = class Users {
 
     async deletar(id) {
         validarId(id);
-
-        const { rowCount } = await pool.query(
-            'DELETE FROM usuarios WHERE id_user = $1',
-            [id]
-        );
-
-        return rowCount > 0;
+        const deleted = await prisma.usuarios.deleteMany({ where: { idUser: Number(id) } });
+        return deleted.count > 0;
     }
 };

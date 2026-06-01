@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql" 
+}
+
+model TipoUsuario {
+  idTipo   Int       @id @default(autoincrement()) @map("id_tipo")
+  tipo     String?   @db.VarChar(15)
+
+  usuarios Usuario[]
+
+  @@map("tipo_usuario")
+}
+
+model Usuario {
+  idUser      Int         @id @default(autoincrement()) @map("id_user")
+  nomeUsuario String?     @map("nome_usuario") @db.VarChar(100)
+  senha       String?     // maps to TEXT
+  tipoId      Int         @map("tipo")
+  status      String?     @db.VarChar(15)
+
+  tipo        TipoUsuario @relation(fields: [tipoId], references: [idTipo])
+
+  @@map("usuarios")
+}
+
+model Noticia {
+  idNoticia Int      @id @default(autoincrement()) @map("id_noticia")
+  titulo    String?  @map("titulo") @db.VarChar(150)
+  resumo    String   @map("resumo") // TEXT NOT NULL
+  imagem    String?  @map("imagem")
+  banner    String?  @map("banner")
+  conteudo  String?  @map("conteudo")
+  link      String?  @map("link")
+  categoria String   @default("diaria") @db.VarChar(20)
+  data      DateTime @map("data") @default(dbgenerated("CURRENT_DATE")) @db.Date
+
+  @@map("noticias")
+}

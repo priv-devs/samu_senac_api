@@ -1,13 +1,13 @@
-const TipoUsuario = require('../../models/tipoUsuario');
+const Users = require('../../models/users');
 const tratarErro = require('../../utils/tratar_erros.ultils');
 
-const tipoUsuarioModel = new TipoUsuario();
+const usersModel = new Users();
 
 module.exports = {
     async index(req, res, next) {
         try {
-            const tipos = await tipoUsuarioModel.findAll();
-            return res.json(tipos);
+            const usuarios = await usersModel.findAll();
+            return res.json(usuarios);
         } catch (error) {
             return next(error);
         }
@@ -16,13 +16,14 @@ module.exports = {
     async listar(req, res, next) {
         try {
             const { id } = req.params;
-            const tipo = await tipoUsuarioModel.findById(id);
 
-            if (!tipo) {
-                return res.status(404).json({ message: 'Tipo de usuario nao encontrado' });
+            const usuario = await usersModel.findPublicById(id);
+
+            if (!usuario) {
+                return res.status(404).json({ message: 'Usuario nao encontrado' });
             }
 
-            return res.json(tipo);
+            return res.json(usuario);
         } catch (error) {
             return tratarErro(error, res, next);
         }
@@ -30,8 +31,8 @@ module.exports = {
 
     async store(req, res, next) {
         try {
-            const tipo = await tipoUsuarioModel.create(req.body);
-            return res.status(201).json(tipo);
+            const usuario = await usersModel.create(req.body);
+            return res.status(201).json(usuario);
         } catch (error) {
             return tratarErro(error, res, next);
         }
@@ -40,13 +41,14 @@ module.exports = {
     async update(req, res, next) {
         try {
             const { id } = req.params;
-            const tipo = await tipoUsuarioModel.update(id, req.body);
 
-            if (!tipo) {
-                return res.status(404).json({ message: 'Tipo de usuario nao encontrado' });
+            const usuario = await usersModel.update(id, req.body);
+
+            if (!usuario) {
+                return res.status(404).json({ message: 'Usuario nao encontrado' });
             }
 
-            return res.json(tipo);
+            return res.json(usuario);
         } catch (error) {
             return tratarErro(error, res, next);
         }
@@ -55,13 +57,14 @@ module.exports = {
     async patch(req, res, next) {
         try {
             const { id } = req.params;
-            const tipo = await tipoUsuarioModel.updatePartial(id, req.body);
 
-            if (!tipo) {
-                return res.status(404).json({ message: 'Tipo de usuario nao encontrado' });
+            const usuario = await usersModel.updatePartial(id, req.body);
+
+            if (!usuario) {
+                return res.status(404).json({ message: 'Usuario nao encontrado' });
             }
 
-            return res.json(tipo);
+            return res.json(usuario);
         } catch (error) {
             return tratarErro(error, res, next);
         }
@@ -70,10 +73,11 @@ module.exports = {
     async destroy(req, res, next) {
         try {
             const { id } = req.params;
-            const tipoRemovido = await tipoUsuarioModel.deletar(id);
 
-            if (!tipoRemovido) {
-                return res.status(404).json({ message: 'Tipo de usuario nao encontrado' });
+            const usuarioRemovido = await usersModel.deletar(id);
+
+            if (!usuarioRemovido) {
+                return res.status(404).json({ message: 'Usuario nao encontrado' });
             }
 
             return res.status(204).send();
