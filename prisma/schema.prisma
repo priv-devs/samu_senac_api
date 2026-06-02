@@ -44,3 +44,26 @@ model Mapa {
 
   @@map("mapa")
 }
+
+model CoursePage {
+  idCoursePage Int   @id @default(autoincrement()) @map("id_course_page")
+  payload      Json  @map("payload")
+  createdAt    DateTime @map("created_at") @default(now())
+  updatedAt    DateTime @map("updated_at") @updatedAt
+
+  @@map("course_page")
+}
+
+model Course {
+  idCourse   Int      @id @default(autoincrement()) @map("id_course")
+  title      String   @db.VarChar(150)
+  description String? @db.Text
+  thumbnail  String?
+  status     String?  @db.VarChar(30) @default("Rascunho")
+  duration   String?  @db.VarChar(50)
+  level      String?  @db.VarChar(50)
+  createdAt  DateTime @map("created_at") @default(now())
+  updatedAt  DateTime @map("updated_at") @updatedAt
+
+  @@map("courses")
+}
