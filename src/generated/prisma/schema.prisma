@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Usuario {
-  idUser      Int     @id @default(autoincrement()) @map("id_user")
-  nomeUsuario String? @map("nome_usuario") @db.VarChar(100)
-  cpfCnpj     String? @map("cpf_cnpj") @db.VarChar(25)
-  cep         String? @map("cep") @db.VarChar(12)
-  telefone1   String? @map("telefone1") @db.VarChar(25)
-  email       String? @map("email") @db.VarChar(100)
-  senha       String? // maps to TEXT
-  tipo        String? @map("tipo") @db.VarChar(50)
-  status      String? @map("status") @db.VarChar(15)
+  idUser    Int     @id @default(autoincrement()) @map("id_user")
+  nome      String? @map("nome_usuario") @db.VarChar(100)
+  cpfCnpj   String? @map("cpf_cnpj") @db.VarChar(25)
+  cep       String? @map("cep") @db.VarChar(12)
+  telefone1 String? @map("telefone1") @db.VarChar(25)
+  email     String? @map("email") @db.VarChar(100)
+  senha     String?
+  tipo      String? @map("tipo") @db.VarChar(50)
+  status    String? @map("status") @db.VarChar(15)
 
   @@map("usuarios")
 }
@@ -24,7 +24,7 @@ model Usuario {
 model Noticia {
   idNoticia Int      @id @default(autoincrement()) @map("id_noticia")
   titulo    String?  @map("titulo") @db.VarChar(150)
-  resumo    String   @map("resumo") // TEXT NOT NULL
+  resumo    String   @map("resumo")
   imagem    String?  @map("imagem")
   banner    String?  @map("banner")
   conteudo  String?  @map("conteudo")
@@ -43,4 +43,27 @@ model Mapa {
   longitude Float?
 
   @@map("mapa")
+}
+
+model CoursePage {
+  idCoursePage Int      @id @default(autoincrement()) @map("id_course_page")
+  payload      Json     @map("payload")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("course_page")
+}
+
+model Course {
+  idCourse    Int      @id @default(autoincrement()) @map("id_course")
+  title       String   @db.VarChar(150)
+  description String?  @db.Text
+  thumbnail   String?
+  status      String?  @default("Rascunho") @db.VarChar(30)
+  duration    String?  @db.VarChar(50)
+  level       String?  @db.VarChar(50)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("courses")
 }

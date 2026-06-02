@@ -122,7 +122,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UsuarioScalarFieldEnum = {
   idUser: 'idUser',
-  nomeUsuario: 'nomeUsuario',
+  nome: 'nome',
   cpfCnpj: 'cpfCnpj',
   cep: 'cep',
   telefone1: 'telefone1',
@@ -152,9 +152,32 @@ exports.Prisma.MapaScalarFieldEnum = {
   longitude: 'longitude'
 };
 
+exports.Prisma.CoursePageScalarFieldEnum = {
+  idCoursePage: 'idCoursePage',
+  payload: 'payload',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CourseScalarFieldEnum = {
+  idCourse: 'idCourse',
+  title: 'title',
+  description: 'description',
+  thumbnail: 'thumbnail',
+  status: 'status',
+  duration: 'duration',
+  level: 'level',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -167,11 +190,19 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 
 exports.Prisma.ModelName = {
   Usuario: 'Usuario',
   Noticia: 'Noticia',
-  Mapa: 'Mapa'
+  Mapa: 'Mapa',
+  CoursePage: 'CoursePage',
+  Course: 'Course'
 };
 
 /**

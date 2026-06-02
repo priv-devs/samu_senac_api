@@ -7,6 +7,7 @@ datasource db {
   provider = "postgresql"
 }
 
+
 model Usuario {
   idUser      Int     @id @default(autoincrement()) @map("id_user")
   nome String? @map("nome_usuario") @db.VarChar(100)

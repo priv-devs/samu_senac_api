@@ -1,4 +1,4 @@
-const { databaseUrl } = require('../config/database');
+require('dotenv').config();
 
 let PrismaClient;
 try {
@@ -6,10 +6,24 @@ try {
 } catch (e) {
   PrismaClient = require('@prisma/client').PrismaClient;
 }
+ 
+let adapterFactory;
+try {
+  const { PrismaPg } = require('@prisma/adapter-pg');
+  adapterFactory = new PrismaPg(process.env.DATABASE_URL);
+} catch (e) {
+  adapterFactory = undefined;
+}
 
-const prismaOptions = { adapter: { provider: 'postgres', url: databaseUrl } };
-const prisma = (process.env.NODE_ENV === 'production') ? new PrismaClient(prismaOptions) : (global.__prisma || (global.__prisma = new PrismaClient(prismaOptions)));
-process.on('SIGINT', async () => { await prisma.$disconnect(); });
-process.on('SIGTERM', async () => { await prisma.$disconnect(); });
+const prisma = global.__prisma || new PrismaClient({ adapter: adapterFactory });
+if (process.env.NODE_ENV !== 'production') global.__prisma = prisma;
+
+const gracefulDisconnect = async () => {
+  try { await prisma.$disconnect(); } catch (e) { /* ignore */ }
+  process.exit(0);
+};
+
+process.on('SIGINT', gracefulDisconnect);
+process.on('SIGTERM', gracefulDisconnect);
 
 module.exports = prisma;

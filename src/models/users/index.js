@@ -68,7 +68,7 @@ function validarDadosUsuario(dados, parcial = false) {
 
 module.exports = class Users {
     async findAll() {
-        const rows = await prisma.usuarios.findMany({
+        const rows = await prisma.usuario.findMany({
             orderBy: { idUser: 'asc' },
             select: {
                 idUser: true,
@@ -93,7 +93,7 @@ module.exports = class Users {
 
     async findById(id) {
         validarId(id);
-        const r = await prisma.usuarios.findUnique({
+        const r = await prisma.usuario.findUnique({
             where: { idUser: Number(id) },
             select: {
                 idUser: true,
@@ -132,7 +132,7 @@ module.exports = class Users {
     async create({ nome_usuario, senha, tipo, cpf_cnpj, cep, telefone1, email }) {
         validarDadosUsuario({ nome_usuario, senha, tipo, cpf_cnpj, cep, telefone1, email });
 
-        const created = await prisma.usuarios.create({
+        const created = await prisma.usuario.create({
             data: {
                 nome: nome_usuario ? nome_usuario.trim() : null,
                 senha: senha ? String(senha) : null,
@@ -167,7 +167,7 @@ module.exports = class Users {
             status: status !== undefined ? status : currentUser.status
         };
 
-        await prisma.usuarios.update({ where: { idUser: Number(id) }, data });
+        await prisma.usuario.update({ where: { idUser: Number(id) }, data });
         return this.findPublicById(id);
     }
 
@@ -193,12 +193,12 @@ module.exports = class Users {
 
     async deletar(id) {
         validarId(id);
-        const deleted = await prisma.usuarios.deleteMany({ where: { idUser: Number(id) } });
+        const deleted = await prisma.usuario.deleteMany({ where: { idUser: Number(id) } });
         return deleted.count > 0;
     }
  
     async findAllTipos() {
-        const rows = await prisma.usuarios.findMany({
+        const rows = await prisma.usuario.findMany({
             where: { tipo: { not: null } },
             distinct: ['tipo'],
             select: { tipo: true }
@@ -208,7 +208,7 @@ module.exports = class Users {
 
     async findTipo(tipo) {
         if (!tipo || typeof tipo !== 'string') return null;
-        const r = await prisma.usuarios.findFirst({ where: { tipo: tipo }, select: { tipo: true } });
+        const r = await prisma.usuario.findFirst({ where: { tipo: tipo }, select: { tipo: true } });
         if (!r) return null;
         return { tipo: r.tipo };
     }
