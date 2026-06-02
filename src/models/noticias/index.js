@@ -22,7 +22,6 @@ function validarCategoria(categoria) {
         throw new ValidationError('categoria invalida');
     }
 }
-
 function normalizarPaginacao({ pagina = 1, por_pagina, limite } = {}) {
     const page = Number(pagina) > 0 ? Number(pagina) : 1;
     const perPage = Number(por_pagina || limite) > 0 ? Number(por_pagina || limite) : 10;
@@ -33,30 +32,44 @@ function normalizarPaginacao({ pagina = 1, por_pagina, limite } = {}) {
     };
 }
 
+function isString(v) {
+    return typeof v === 'string';
+}
+
+function isNonEmptyString(v) {
+    return isString(v) && v.trim().length > 0;
+}
+
+function trimOrNull(v) {
+    if (!isString(v)) return null;
+    const t = v.trim();
+    return t === '' ? null : t;
+}
+
 function validarNoticia(dados, parcial = false) {
     const erros = [];
 
-    if (!parcial || dados.titulo !== undefined) {
-        if (dados.titulo !== undefined && dados.titulo !== null && typeof dados.titulo !== 'string') {
+    if (!parcial || Object.prototype.hasOwnProperty.call(dados, 'titulo')) {
+        if (dados.titulo !== undefined && dados.titulo !== null && !isString(dados.titulo)) {
             erros.push('titulo deve ser texto');
-        } else if (dados.titulo && dados.titulo.trim().length > 150) {
+        } else if (isNonEmptyString(dados.titulo) && dados.titulo.trim().length > 150) {
             erros.push('titulo deve ter no maximo 150 caracteres');
         }
     }
 
-    if (!parcial || dados.resumo !== undefined) {
-        if (!dados.resumo || typeof dados.resumo !== 'string') {
+    if (!parcial || Object.prototype.hasOwnProperty.call(dados, 'resumo')) {
+        if (!isNonEmptyString(dados.resumo)) {
             erros.push('resumo e obrigatorio');
         }
     }
 
     ['imagem', 'banner', 'conteudo', 'link'].forEach((campo) => {
-        if (dados[campo] !== undefined && dados[campo] !== null && typeof dados[campo] !== 'string') {
+        if (Object.prototype.hasOwnProperty.call(dados, campo) && dados[campo] !== null && !isString(dados[campo])) {
             erros.push(`${campo} deve ser texto`);
         }
     });
 
-    if (dados.categoria !== undefined) {
+    if (Object.prototype.hasOwnProperty.call(dados, 'categoria') && dados.categoria !== undefined) {
         validarCategoria(dados.categoria);
     }
 
@@ -67,12 +80,12 @@ function validarNoticia(dados, parcial = false) {
 
 function normalizarNoticia(dados, categoriaPadrao) {
     return {
-        titulo: dados.titulo ? dados.titulo.trim() : null,
-        resumo: dados.resumo.trim(),
-        imagem: dados.imagem ? dados.imagem.trim() : null,
-        banner: dados.banner ? dados.banner.trim() : null,
-        conteudo: dados.conteudo ? dados.conteudo.trim() : null,
-        link: dados.link ? dados.link.trim() : null,
+        titulo: trimOrNull(dados.titulo),
+        resumo: isString(dados.resumo) ? dados.resumo.trim() : null,
+        imagem: trimOrNull(dados.imagem),
+        banner: trimOrNull(dados.banner),
+        conteudo: trimOrNull(dados.conteudo),
+        link: trimOrNull(dados.link),
         categoria: dados.categoria || categoriaPadrao || 'diaria'
     };
 }
@@ -209,7 +222,7 @@ module.exports = class Noticias {
 
         const noticia = normalizarNoticia(data, categoriaPadrao);
 
-        const updated = await prisma.noticia.updateMany({
+        await prisma.noticia.update({
             where: { idNoticia: Number(id) },
             data: {
                 titulo: noticia.titulo,
@@ -221,8 +234,6 @@ module.exports = class Noticias {
                 categoria: noticia.categoria
             }
         });
-
-        if (updated.count === 0) return null;
 
         return this.findById(id);
     }
@@ -248,8 +259,9 @@ module.exports = class Noticias {
             link: data.link ?? currentNoticia.link,
             categoria: data.categoria ?? currentNoticia.categoria
         };
-
-        return this.update(id, merged, currentNoticia.categoria);
+ 
+        const mergedNormalized = normalizarNoticia(merged, currentNoticia.categoria);
+        return this.update(id, mergedNormalized, currentNoticia.categoria);
     }
 
     async deletar(id) {

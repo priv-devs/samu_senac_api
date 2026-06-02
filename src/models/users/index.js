@@ -15,58 +15,55 @@ function validarId(id) {
         throw new ValidationError('id de usuario invalido');
     }
 }
+function isString(v) { return typeof v === 'string'; }
+function isNonEmptyString(v) { return isString(v) && v.trim().length > 0; }
+function trimOrNull(v) { if (!isString(v)) return null; const t = v.trim(); return t === '' ? null : t; }
 
 function validarDadosUsuario(dados, parcial = false) {
     const erros = [];
 
-    if (!parcial || dados.nome_usuario !== undefined) {
-        if (!dados.nome_usuario || typeof dados.nome_usuario !== 'string') {
+    if (!parcial || Object.prototype.hasOwnProperty.call(dados, 'nome_usuario')) {
+        if (!isNonEmptyString(dados.nome_usuario)) {
             erros.push('nome_usuario e obrigatorio');
         } else if (dados.nome_usuario.trim().length > 100) {
             erros.push('nome_usuario deve ter no maximo 100 caracteres');
         }
     }
 
-    if (!parcial || dados.senha !== undefined) {
-        if (!dados.senha || typeof dados.senha !== 'string') {
+    if (!parcial || Object.prototype.hasOwnProperty.call(dados, 'senha')) {
+        if (!isNonEmptyString(dados.senha)) {
             erros.push('senha e obrigatoria');
         }
     }
 
-    if (!parcial || dados.tipo !== undefined) {
-        if (!dados.tipo) {
+    if (!parcial || Object.prototype.hasOwnProperty.call(dados, 'tipo')) {
+        if (!dados.tipo || !isString(dados.tipo)) {
             erros.push('tipo e obrigatorio');
         }
     }
 
-    if (dados.status !== undefined && typeof dados.status !== 'string') {
-        erros.push('status deve ser texto');
+    if (Object.prototype.hasOwnProperty.call(dados, 'status')) {
+        if (!isString(dados.status)) erros.push('status deve ser texto');
+        else if (dados.status && dados.status.trim().length > 15) erros.push('status deve ter no maximo 15 caracteres');
     }
 
-    if (dados.status && dados.status.trim().length > 15) {
-        erros.push('status deve ter no maximo 15 caracteres');
-    }
-
-  
-    if (dados.cpf_cnpj !== undefined && typeof dados.cpf_cnpj !== 'string') {
+    if (Object.prototype.hasOwnProperty.call(dados, 'cpf_cnpj') && dados.cpf_cnpj !== undefined && !isString(dados.cpf_cnpj)) {
         erros.push('cpf_cnpj deve ser texto');
     }
 
-    if (dados.cep !== undefined && typeof dados.cep !== 'string') {
+    if (Object.prototype.hasOwnProperty.call(dados, 'cep') && dados.cep !== undefined && !isString(dados.cep)) {
         erros.push('cep deve ser texto');
     }
 
-    if (dados.telefone1 !== undefined && typeof dados.telefone1 !== 'string') {
+    if (Object.prototype.hasOwnProperty.call(dados, 'telefone1') && dados.telefone1 !== undefined && !isString(dados.telefone1)) {
         erros.push('telefone1 deve ser texto');
     }
 
-    if (dados.email !== undefined && typeof dados.email !== 'string') {
+    if (Object.prototype.hasOwnProperty.call(dados, 'email') && dados.email !== undefined && !isString(dados.email)) {
         erros.push('email deve ser texto');
     }
 
-    if (erros.length) {
-        throw new ValidationError('Dados invalidos', erros);
-    }
+    if (erros.length) throw new ValidationError('Dados invalidos', erros);
 }
 
 module.exports = class Users {
@@ -88,7 +85,7 @@ module.exports = class Users {
 
         return rows.map(r => ({
             id: r.idUser,
-            nome: r.nome,
+            nome_usuario: r.nome,
             tipo: r.tipo,
             status: r.status
         }));
@@ -152,28 +149,25 @@ module.exports = class Users {
         return this.findPublicById(created.idUser);
     }
 
-    async update(id, { nome, senha, tipo, status, cpfCnpj, cep, telefone1, email }) {
+    async update(id, { nome_usuario, senha, tipo, status, cpf_cnpj, cep, telefone1, email }) {
         validarId(id);
-        validarDadosUsuario({ nome, senha, tipo, cpfCnpj, cep, telefone1, email });
+        validarDadosUsuario({ nome_usuario, senha, tipo, cpf_cnpj, cep, telefone1, email });
 
         const currentUser = await this.findById(id);
         if (!currentUser) return null;
 
-        const updated = await prisma.usuarios.updateMany({
-            where: { idUser: Number(id) },
-            data: {
-                nome: nome_usuario !== undefined ? (nome_usuario ? nome_usuario.trim() : null) : currentUser.nome_usuario,
-                senha: senha !== undefined ? (senha ? String(senha) : null) : currentUser.senha,
-                cpfCnpj: cpf_cnpj !== undefined ? (cpf_cnpj ? cpf_cnpj.trim() : null) : currentUser.cpf_cnpj,
-                cep: cep !== undefined ? (cep ? cep.trim() : null) : currentUser.cep,
-                telefone1: telefone1 !== undefined ? (telefone1 ? telefone1.trim() : null) : currentUser.telefone1,
-                email: email !== undefined ? (email ? email.trim() : null) : currentUser.email,
-                tipo: tipo !== undefined ? tipo : currentUser.tipo,
-                status: status !== undefined ? status : currentUser.status
-            }
-        });
+        const data = {
+            nome: Object.prototype.hasOwnProperty.call({ nome_usuario }, 'nome_usuario') ? trimOrNull(nome_usuario) : currentUser.nome_usuario,
+            senha: Object.prototype.hasOwnProperty.call({ senha }, 'senha') ? (senha ? String(senha) : null) : currentUser.senha,
+            cpfCnpj: Object.prototype.hasOwnProperty.call({ cpf_cnpj }, 'cpf_cnpj') ? trimOrNull(cpf_cnpj) : currentUser.cpf_cnpj,
+            cep: Object.prototype.hasOwnProperty.call({ cep }, 'cep') ? trimOrNull(cep) : currentUser.cep,
+            telefone1: Object.prototype.hasOwnProperty.call({ telefone1 }, 'telefone1') ? trimOrNull(telefone1) : currentUser.telefone1,
+            email: Object.prototype.hasOwnProperty.call({ email }, 'email') ? trimOrNull(email) : currentUser.email,
+            tipo: tipo !== undefined ? tipo : currentUser.tipo,
+            status: status !== undefined ? status : currentUser.status
+        };
 
-        if (updated.count === 0) return null;
+        await prisma.usuarios.update({ where: { idUser: Number(id) }, data });
         return this.findPublicById(id);
     }
 

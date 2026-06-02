@@ -1,54 +1,60 @@
 # SAMU Senac API
 
-API em Node.js com Express e PostgreSQL para cadastro de usuarios e tipos de usuario.
+API em Node.js com Express e PostgreSQL (Prisma) para cadastro de usuários e notícias.
+
+## Resumo das mudanças recentes
+- O campo `tipo` agora é uma coluna na tabela `usuarios` (string). Não existe mais uma tabela separada `tipoUsuario`.
+- Endpoints de tipo de usuário foram movidos para o mesmo namespace dos usuários: `/users/tipo-usuario` (apenas leitura — mutações devem ser feitas via criação/atualização de usuários).
+- Prisma é usado como ORM com o client gerado em `src/generated/prisma`.
 
 ## Tecnologias
-
 - Node.js
 - Express
 - PostgreSQL
-- pg
+- Prisma
 - dotenv
-- morgan
 
-## Como rodar
+## Como rodar (desenvolvimento)
+1. Instale dependências:
 
-Instale as dependencias:
-
-```bash
+```powershell
 npm install
 ```
 
-Crie o arquivo `.env` na raiz do projeto:
+2. Crie `.env` com as variáveis necessárias (exemplo):
 
 ```env
 PORT=7777
 DATABASE_URL=postgres://usuario:senha@localhost:5432/nome_do_banco
 ```
 
-Crie as tabelas no banco usando o arquivo:
+3. Gere/atualize o client Prisma (após editar `prisma/schema.prisma`):
 
-```text
-src/database/schema.sql
+```powershell
+npx prisma generate
 ```
 
-Inicie a API:
+4. (Opcional) Rode migrações para aplicar o schema no seu banco:
 
-```bash
+```powershell
+npx prisma migrate dev --name init
+```
+
+5. Seed (opcional):
+
+```powershell
+node prisma/seed.js
+```
+
+6. Inicie a API:
+
+```powershell
+npm run dev
+# ou
 npm start
 ```
 
-Para desenvolvimento:
-
-```bash
-npm run dev
-```
-
-Por padrao, a API roda em:
-
-```text
-http://localhost:7777
-```
+A API, por padrão, ficará disponível em `http://localhost:7777` (ou na porta do seu `.env`).
 
 ## Estrutura principal
 
@@ -56,348 +62,111 @@ http://localhost:7777
 src/
   app/
   controllers/
-  database/
   models/
   routes/
+  prisma/client.js (Prisma client wrapper)
+  generated/prisma (Prisma generated client)
 ```
 
-O fluxo usado no projeto e:
+Fluxo: routes -> controllers -> models -> prisma client
 
-```text
-routes -> controllers -> models -> database
-```
+---
 
-## Tipo de usuario
+## Endpoints principais
 
-Base da rota:
+Base: `/users`
 
-```text
-/tipo-usuario
-```
+- GET /users
+  - Lista usuários (retorna: `id`, `nome_usuario`, `tipo`, `status`)
+- GET /users/:id
+  - Retorna um usuário público por id (omite senha e campos sensíveis)
+- POST /users
+  - Cria usuário. Body exemplo:
+    ```json
+    {
+      "nome_usuario": "joao123",
+      "senha": "minhasenha",
+      "tipo": "admin",
+      "status": "ativo",
+      "cpf_cnpj": "00000000000",
+      "cep": "00000-000",
+      "telefone1": "(11) 99999-9999",
+      "email": "joao@example.com"
+    }
+    ```
+  - `tipo` é uma string (ex: "admin", "cliente").
+  - `status` padrão é `ativo` quando não informado.
+- PUT /users/:id
+  - Atualiza todo o recurso (envie os campos desejados). Returns user public view.
+- PATCH /users/:id
+  - Atualização parcial (envie campos parciais). Returns user public view.
+- DELETE /users/:id
+  - Remove usuário (204 on success).
 
-### Listar tipos
+### Tipo de usuário (leitura)
+- GET /users/tipo-usuario
+  - Lista os valores distintos de `tipo` existentes na tabela `usuarios`.
+  - Resposta exemplo:
+    ```json
+    [ { "tipo": "admin" }, { "tipo": "cliente" } ]
+    ```
+- GET /users/tipo-usuario/:tipo
+  - Retorna 404 se não existir.
 
-```http
-GET /tipo-usuario
-```
+Nota: mutações (POST/PUT/PATCH/DELETE) em `/users/tipo-usuario` retornam 405 — para adicionar/alterar tipos, atualize/crie usuários com o campo `tipo`.
 
-Resposta:
+---
+
+## Notícias
+Base: `/api/noticias`
+
+- GET /api/noticias/principal
+  - Retorna a notícia principal com forma reduzida (id, titulo, resumo, imagem, data).
+- GET /api/noticias/secundarias?limite=4&pagina=1
+  - Lista noticias secundarias (resumo, imagem, link).
+- GET /api/noticias?pagina=1&por_pagina=10
+  - Lista noticias diarias/paginadas.
+- POST /api/noticias
+  - Cria uma noticia (diaria) — campos: titulo, resumo, banner, conteudo, categoria (opcional, default 'diaria').
+- PUT/PATCH/DELETE endpoints seguem o padrão REST descrito no código.
+
+---
+
+## Mapa
+- GET /api/mapa
+  - Retorna o registro do mapa: `{ embed_url, endereco, latitude, longitude }`.
+- PATCH /api/mapa
+  - Atualiza (ou cria) os dados do mapa. Body ex:
+    ```json
+    { "embed_url": "...", "endereco": "Rua X, 123", "latitude": -23.5, "longitude": -46.6 }
+    ```
+
+---
+
+## Prisma / Banco
+- O schema Prisma atual está em `prisma/schema.prisma`.
+- O client Prisma gerado fica em `src/generated/prisma` (gerado por `npx prisma generate`).
+- Seed atualizado em `prisma/seed.js` para criar exemplos de usuários com `tipo`.
+
+---
+
+## Observações e recomendações
+- Senhas (`senha`) atualmente são armazenadas como texto no banco. Recomendo fortemente adicionar hashing (bcrypt) antes de persistir. Posso adicionar isso se quiser.
+- Se prefere um lookup table para `tipo` (normalização), podemos reintroduzir `tipo_usuario` como tabela e migrar valores — hoje o projeto usa uma coluna simples por sua preferência anterior.
+- Posso atualizar o README com exemplos curl/postman reais, ou adicionar testes de integração para validar os endpoints.
+
+---
+
+## Validações e erros
+Exemplos de retorno de erro:
 
 ```json
-[
-  {
-    "id_tipo": 1,
-    "tipo": "admin"
-  }
-]
+{ "message": "id de usuario invalido" }
 ```
 
-### Buscar tipo por ID
+---
 
-```http
-GET /tipo-usuario/1
-```
-
-Resposta:
-
-```json
-{
-  "id_tipo": 1,
-  "tipo": "admin"
-}
-```
-
-### Cadastrar tipo
-
-```http
-POST /tipo-usuario
-```
-
-Body:
-
-```json
-{
-  "tipo": "admin"
-}
-```
-
-Resposta:
-
-```json
-{
-  "id_tipo": 1,
-  "tipo": "admin"
-}
-```
-
-### Atualizar tipo
-
-```http
-PUT /tipo-usuario/1
-```
-
-Body:
-
-```json
-{
-  "tipo": "medico"
-}
-```
-
-### Atualizar parcialmente
-
-```http
-PATCH /tipo-usuario/1
-```
-
-Body:
-
-```json
-{
-  "tipo": "enfermeiro"
-}
-```
-
-### Remover tipo
-
-```http
-DELETE /tipo-usuario/1
-```
-
-Quando remove com sucesso, retorna `204 No Content`.
-
-Se o tipo estiver sendo usado por algum usuario, a API retorna erro, porque existe chave estrangeira entre `usuarios.tipo` e `tipo_usuario.id_tipo`.
-
-## Usuarios
-
-Base da rota:
-
-```text
-/users
-```
-
-### Listar usuarios
-
-```http
-GET /users
-```
-
-Resposta:
-
-```json
-[
-  {
-    "id_user": 1,
-    "nome_usuario": "Guilherme",
-    "tipo": 1,
-    "tipo_usuario": "admin",
-    "status": "ativo"
-  }
-]
-```
-
-### Buscar usuario por ID
-
-```http
-GET /users/1
-```
-
-Resposta:
-
-```json
-{
-  "id_user": 1,
-  "nome_usuario": "Guilherme",
-  "tipo": 1,
-  "tipo_usuario": "admin",
-  "status": "ativo"
-}
-```
-
-### Cadastrar usuario
-
-```http
-POST /users
-```
-
-Body:
-
-```json
-{
-  "nome_usuario": "Guilherme",
-  "senha": "123456",
-  "tipo": 1,
-  "status": "ativo"
-}
-```
-
-O campo `tipo` pode receber o ID do tipo de usuario. O `status` e opcional; se nao for enviado, entra como `ativo`.
-
-### Atualizar usuario
-
-```http
-PUT /users/1
-```
-
-Body:
-
-```json
-{
-  "nome_usuario": "Guilherme Souza",
-  "senha": "123456",
-  "tipo": 1,
-  "status": "ativo"
-}
-```
-
-### Atualizar parcialmente
-
-```http
-PATCH /users/1
-```
-
-Body:
-
-```json
-{
-  "status": "inativo"
-}
-```
-
-### Remover usuario
-
-```http
-DELETE /users/1
-```
-
-Quando remove com sucesso, retorna `204 No Content`.
-
-## Noticias
-
-Base da rota:
-
-```text
-/api/noticias
-```
-
-### Buscar noticia principal
-
-```http
-GET /api/noticias/principal
-```
-
-### Criar noticia principal
-
-```http
-POST /api/noticias/principal
-```
-
-Body:
-
-```json
-{
-  "titulo": "Titulo da noticia",
-  "resumo": "Resumo sobre a noticia",
-  "imagem": "url_do_banner",
-  "conteudo": "Conteudo completo"
-}
-```
-
-### Listar noticias secundarias
-
-```http
-GET /api/noticias/secundarias?limite=4&pagina=1
-```
-
-### Criar noticia secundaria
-
-```http
-POST /api/noticias/secundarias
-```
-
-Body:
-
-```json
-{
-  "resumo": "Resumo sobre a noticia",
-  "imagem": "url_thumbnail",
-  "link": "/noticia/1"
-}
-```
-
-### Atualizar noticia secundaria
-
-```http
-PUT /api/noticias/secundarias/1
-```
-
-### Remover noticia secundaria
-
-```http
-DELETE /api/noticias/secundarias/1
-```
-
-### Listar noticias diarias
-
-```http
-GET /api/noticias?pagina=1&por_pagina=10
-```
-
-### Criar noticia diaria
-
-```http
-POST /api/noticias
-```
-
-Body:
-
-```json
-{
-  "titulo": "Titulo da noticia",
-  "resumo": "Resumo da noticia",
-  "banner": "url_do_banner",
-  "conteudo": "Conteudo completo em HTML",
-  "categoria": "diaria"
-}
-```
-
-### Atualizar noticia diaria
-
-```http
-PUT /api/noticias/1
-```
-
-### Atualizar parcialmente
-
-```http
-PATCH /api/noticias/1
-```
-
-Body:
-
-```json
-{
-  "resumo": "Atualizar apenas o resumo"
-}
-```
-
-### Remover noticia
-
-```http
-DELETE /api/noticias/1
-```
-
-Quando remove com sucesso, retorna `204 No Content`.
-
-## Validacoes
-
-Alguns exemplos de erro:
-
-```json
-{
-  "message": "id de usuario invalido"
-}
-```
+Se quiser que eu atualize mais trechos (ex.: exemplos de request/response com formatos exatos, ou incluir instruções do Docker/CI), diga o que prefere e eu ajusto.
 
 ```json
 {
