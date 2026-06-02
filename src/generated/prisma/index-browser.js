@@ -120,16 +120,15 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.TipoUsuarioScalarFieldEnum = {
-  idTipo: 'idTipo',
-  tipo: 'tipo'
-};
-
 exports.Prisma.UsuarioScalarFieldEnum = {
   idUser: 'idUser',
   nomeUsuario: 'nomeUsuario',
+  cpfCnpj: 'cpfCnpj',
+  cep: 'cep',
+  telefone1: 'telefone1',
+  email: 'email',
   senha: 'senha',
-  tipoId: 'tipoId',
+  tipo: 'tipo',
   status: 'status'
 };
 
@@ -143,6 +142,14 @@ exports.Prisma.NoticiaScalarFieldEnum = {
   link: 'link',
   categoria: 'categoria',
   data: 'data'
+};
+
+exports.Prisma.MapaScalarFieldEnum = {
+  id: 'id',
+  embedUrl: 'embedUrl',
+  endereco: 'endereco',
+  latitude: 'latitude',
+  longitude: 'longitude'
 };
 
 exports.Prisma.SortOrder = {
@@ -162,9 +169,9 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  TipoUsuario: 'TipoUsuario',
   Usuario: 'Usuario',
-  Noticia: 'Noticia'
+  Noticia: 'Noticia',
+  Mapa: 'Mapa'
 };
 
 /**

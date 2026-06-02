@@ -7,23 +7,16 @@ datasource db {
   provider = "postgresql"
 }
 
-model TipoUsuario {
-  idTipo Int     @id @default(autoincrement()) @map("id_tipo")
-  tipo   String? @db.VarChar(15)
-
-  usuarios Usuario[]
-
-  @@map("tipo_usuario")
-}
-
 model Usuario {
   idUser      Int     @id @default(autoincrement()) @map("id_user")
   nomeUsuario String? @map("nome_usuario") @db.VarChar(100)
+  cpfCnpj     String? @map("cpf_cnpj") @db.VarChar(25)
+  cep         String? @map("cep") @db.VarChar(12)
+  telefone1   String? @map("telefone1") @db.VarChar(25)
+  email       String? @map("email") @db.VarChar(100)
   senha       String? // maps to TEXT
-  tipoId      Int     @map("tipo")
-  status      String? @db.VarChar(15)
-
-  tipo TipoUsuario @relation(fields: [tipoId], references: [idTipo])
+  tipo        String? @map("tipo") @db.VarChar(50)
+  status      String? @map("status") @db.VarChar(15)
 
   @@map("usuarios")
 }
@@ -40,4 +33,14 @@ model Noticia {
   data      DateTime @default(dbgenerated("CURRENT_DATE")) @map("data") @db.Date
 
   @@map("noticias")
+}
+
+model Mapa {
+  id        Int     @id @default(autoincrement())
+  embedUrl  String? @map("embed_url")
+  endereco  String? @map("endereco") @db.VarChar(200)
+  latitude  Float?
+  longitude Float?
+
+  @@map("mapa")
 }

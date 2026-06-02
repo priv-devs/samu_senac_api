@@ -7,15 +7,29 @@ try {
 
 const prisma = new PrismaClient();
 
-async function main() {
-  const tipos = ['cliente', 'admin', 'root'];
-  for (const tipo of tipos) {
-    await prisma.tipoUsuario.upsert({
-      where: { tipo },
-      update: {},
-      create: { tipo }
-    });
-  }
+async function main() { 
+  await prisma.usuarios.upsert({
+    where: { id_user: 1 },
+    update: {},
+    create: {
+      nome_usuario: 'admin',
+      senha: 'admin',
+      tipo: 'admin',
+      status: 'ativo',
+      email: 'admin@example.com'
+    }
+  });
+  await prisma.usuarios.upsert({
+    where: { id_user: 2 },
+    update: {},
+    create: {
+      nome_usuario: 'user',
+      senha: 'user',
+      tipo: 'cliente',
+      status: 'ativo',
+      email: 'user@example.com'
+    }
+  });
   console.log('Seed concluido');
 }
 

@@ -14,11 +14,6 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model TipoUsuario
- * 
- */
-export type TipoUsuario = $Result.DefaultSelection<Prisma.$TipoUsuarioPayload>
-/**
  * Model Usuario
  * 
  */
@@ -28,6 +23,11 @@ export type Usuario = $Result.DefaultSelection<Prisma.$UsuarioPayload>
  * 
  */
 export type Noticia = $Result.DefaultSelection<Prisma.$NoticiaPayload>
+/**
+ * Model Mapa
+ * 
+ */
+export type Mapa = $Result.DefaultSelection<Prisma.$MapaPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -38,8 +38,8 @@ export type Noticia = $Result.DefaultSelection<Prisma.$NoticiaPayload>
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more TipoUsuarios
- * const tipoUsuarios = await prisma.tipoUsuario.findMany()
+ * // Fetch zero or more Usuarios
+ * const usuarios = await prisma.usuario.findMany()
  * ```
  *
  *
@@ -61,8 +61,8 @@ export class PrismaClient<
    * const prisma = new PrismaClient({
    *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
    * })
-   * // Fetch zero or more TipoUsuarios
-   * const tipoUsuarios = await prisma.tipoUsuario.findMany()
+   * // Fetch zero or more Usuarios
+   * const usuarios = await prisma.usuario.findMany()
    * ```
    *
    *
@@ -151,16 +151,6 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.tipoUsuario`: Exposes CRUD operations for the **TipoUsuario** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more TipoUsuarios
-    * const tipoUsuarios = await prisma.tipoUsuario.findMany()
-    * ```
-    */
-  get tipoUsuario(): Prisma.TipoUsuarioDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.usuario`: Exposes CRUD operations for the **Usuario** model.
     * Example usage:
     * ```ts
@@ -179,6 +169,16 @@ export class PrismaClient<
     * ```
     */
   get noticia(): Prisma.NoticiaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mapa`: Exposes CRUD operations for the **Mapa** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Mapas
+    * const mapas = await prisma.mapa.findMany()
+    * ```
+    */
+  get mapa(): Prisma.MapaDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -613,9 +613,9 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    TipoUsuario: 'TipoUsuario',
     Usuario: 'Usuario',
-    Noticia: 'Noticia'
+    Noticia: 'Noticia',
+    Mapa: 'Mapa'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -631,84 +631,10 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "tipoUsuario" | "usuario" | "noticia"
+      modelProps: "usuario" | "noticia" | "mapa"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      TipoUsuario: {
-        payload: Prisma.$TipoUsuarioPayload<ExtArgs>
-        fields: Prisma.TipoUsuarioFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.TipoUsuarioFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.TipoUsuarioFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload>
-          }
-          findFirst: {
-            args: Prisma.TipoUsuarioFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.TipoUsuarioFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload>
-          }
-          findMany: {
-            args: Prisma.TipoUsuarioFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload>[]
-          }
-          create: {
-            args: Prisma.TipoUsuarioCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload>
-          }
-          createMany: {
-            args: Prisma.TipoUsuarioCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.TipoUsuarioCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload>[]
-          }
-          delete: {
-            args: Prisma.TipoUsuarioDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload>
-          }
-          update: {
-            args: Prisma.TipoUsuarioUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload>
-          }
-          deleteMany: {
-            args: Prisma.TipoUsuarioDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.TipoUsuarioUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.TipoUsuarioUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload>[]
-          }
-          upsert: {
-            args: Prisma.TipoUsuarioUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TipoUsuarioPayload>
-          }
-          aggregate: {
-            args: Prisma.TipoUsuarioAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTipoUsuario>
-          }
-          groupBy: {
-            args: Prisma.TipoUsuarioGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TipoUsuarioGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.TipoUsuarioCountArgs<ExtArgs>
-            result: $Utils.Optional<TipoUsuarioCountAggregateOutputType> | number
-          }
-        }
-      }
       Usuario: {
         payload: Prisma.$UsuarioPayload<ExtArgs>
         fields: Prisma.UsuarioFieldRefs
@@ -857,6 +783,80 @@ export namespace Prisma {
           }
         }
       }
+      Mapa: {
+        payload: Prisma.$MapaPayload<ExtArgs>
+        fields: Prisma.MapaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MapaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MapaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload>
+          }
+          findFirst: {
+            args: Prisma.MapaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MapaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload>
+          }
+          findMany: {
+            args: Prisma.MapaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload>[]
+          }
+          create: {
+            args: Prisma.MapaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload>
+          }
+          createMany: {
+            args: Prisma.MapaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MapaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload>[]
+          }
+          delete: {
+            args: Prisma.MapaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload>
+          }
+          update: {
+            args: Prisma.MapaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload>
+          }
+          deleteMany: {
+            args: Prisma.MapaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MapaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MapaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload>[]
+          }
+          upsert: {
+            args: Prisma.MapaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MapaPayload>
+          }
+          aggregate: {
+            args: Prisma.MapaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMapa>
+          }
+          groupBy: {
+            args: Prisma.MapaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MapaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MapaCountArgs<ExtArgs>
+            result: $Utils.Optional<MapaCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -965,9 +965,9 @@ export namespace Prisma {
     comments?: runtime.SqlCommenterPlugin[]
   }
   export type GlobalOmitConfig = {
-    tipoUsuario?: TipoUsuarioOmit
     usuario?: UsuarioOmit
     noticia?: NoticiaOmit
+    mapa?: MapaOmit
   }
 
   /* Types for Logging */
@@ -1043,1110 +1043,10 @@ export namespace Prisma {
    */
 
 
-  /**
-   * Count Type TipoUsuarioCountOutputType
-   */
-
-  export type TipoUsuarioCountOutputType = {
-    usuarios: number
-  }
-
-  export type TipoUsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuarios?: boolean | TipoUsuarioCountOutputTypeCountUsuariosArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * TipoUsuarioCountOutputType without action
-   */
-  export type TipoUsuarioCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuarioCountOutputType
-     */
-    select?: TipoUsuarioCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * TipoUsuarioCountOutputType without action
-   */
-  export type TipoUsuarioCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UsuarioWhereInput
-  }
-
 
   /**
    * Models
    */
-
-  /**
-   * Model TipoUsuario
-   */
-
-  export type AggregateTipoUsuario = {
-    _count: TipoUsuarioCountAggregateOutputType | null
-    _avg: TipoUsuarioAvgAggregateOutputType | null
-    _sum: TipoUsuarioSumAggregateOutputType | null
-    _min: TipoUsuarioMinAggregateOutputType | null
-    _max: TipoUsuarioMaxAggregateOutputType | null
-  }
-
-  export type TipoUsuarioAvgAggregateOutputType = {
-    idTipo: number | null
-  }
-
-  export type TipoUsuarioSumAggregateOutputType = {
-    idTipo: number | null
-  }
-
-  export type TipoUsuarioMinAggregateOutputType = {
-    idTipo: number | null
-    tipo: string | null
-  }
-
-  export type TipoUsuarioMaxAggregateOutputType = {
-    idTipo: number | null
-    tipo: string | null
-  }
-
-  export type TipoUsuarioCountAggregateOutputType = {
-    idTipo: number
-    tipo: number
-    _all: number
-  }
-
-
-  export type TipoUsuarioAvgAggregateInputType = {
-    idTipo?: true
-  }
-
-  export type TipoUsuarioSumAggregateInputType = {
-    idTipo?: true
-  }
-
-  export type TipoUsuarioMinAggregateInputType = {
-    idTipo?: true
-    tipo?: true
-  }
-
-  export type TipoUsuarioMaxAggregateInputType = {
-    idTipo?: true
-    tipo?: true
-  }
-
-  export type TipoUsuarioCountAggregateInputType = {
-    idTipo?: true
-    tipo?: true
-    _all?: true
-  }
-
-  export type TipoUsuarioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which TipoUsuario to aggregate.
-     */
-    where?: TipoUsuarioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TipoUsuarios to fetch.
-     */
-    orderBy?: TipoUsuarioOrderByWithRelationInput | TipoUsuarioOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TipoUsuarioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TipoUsuarios from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TipoUsuarios.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned TipoUsuarios
-    **/
-    _count?: true | TipoUsuarioCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TipoUsuarioAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TipoUsuarioSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TipoUsuarioMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TipoUsuarioMaxAggregateInputType
-  }
-
-  export type GetTipoUsuarioAggregateType<T extends TipoUsuarioAggregateArgs> = {
-        [P in keyof T & keyof AggregateTipoUsuario]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTipoUsuario[P]>
-      : GetScalarType<T[P], AggregateTipoUsuario[P]>
-  }
-
-
-
-
-  export type TipoUsuarioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TipoUsuarioWhereInput
-    orderBy?: TipoUsuarioOrderByWithAggregationInput | TipoUsuarioOrderByWithAggregationInput[]
-    by: TipoUsuarioScalarFieldEnum[] | TipoUsuarioScalarFieldEnum
-    having?: TipoUsuarioScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TipoUsuarioCountAggregateInputType | true
-    _avg?: TipoUsuarioAvgAggregateInputType
-    _sum?: TipoUsuarioSumAggregateInputType
-    _min?: TipoUsuarioMinAggregateInputType
-    _max?: TipoUsuarioMaxAggregateInputType
-  }
-
-  export type TipoUsuarioGroupByOutputType = {
-    idTipo: number
-    tipo: string | null
-    _count: TipoUsuarioCountAggregateOutputType | null
-    _avg: TipoUsuarioAvgAggregateOutputType | null
-    _sum: TipoUsuarioSumAggregateOutputType | null
-    _min: TipoUsuarioMinAggregateOutputType | null
-    _max: TipoUsuarioMaxAggregateOutputType | null
-  }
-
-  type GetTipoUsuarioGroupByPayload<T extends TipoUsuarioGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<TipoUsuarioGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TipoUsuarioGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TipoUsuarioGroupByOutputType[P]>
-            : GetScalarType<T[P], TipoUsuarioGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TipoUsuarioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idTipo?: boolean
-    tipo?: boolean
-    usuarios?: boolean | TipoUsuario$usuariosArgs<ExtArgs>
-    _count?: boolean | TipoUsuarioCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["tipoUsuario"]>
-
-  export type TipoUsuarioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idTipo?: boolean
-    tipo?: boolean
-  }, ExtArgs["result"]["tipoUsuario"]>
-
-  export type TipoUsuarioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    idTipo?: boolean
-    tipo?: boolean
-  }, ExtArgs["result"]["tipoUsuario"]>
-
-  export type TipoUsuarioSelectScalar = {
-    idTipo?: boolean
-    tipo?: boolean
-  }
-
-  export type TipoUsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idTipo" | "tipo", ExtArgs["result"]["tipoUsuario"]>
-  export type TipoUsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    usuarios?: boolean | TipoUsuario$usuariosArgs<ExtArgs>
-    _count?: boolean | TipoUsuarioCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type TipoUsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type TipoUsuarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $TipoUsuarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "TipoUsuario"
-    objects: {
-      usuarios: Prisma.$UsuarioPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      idTipo: number
-      tipo: string | null
-    }, ExtArgs["result"]["tipoUsuario"]>
-    composites: {}
-  }
-
-  type TipoUsuarioGetPayload<S extends boolean | null | undefined | TipoUsuarioDefaultArgs> = $Result.GetResult<Prisma.$TipoUsuarioPayload, S>
-
-  type TipoUsuarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TipoUsuarioFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TipoUsuarioCountAggregateInputType | true
-    }
-
-  export interface TipoUsuarioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TipoUsuario'], meta: { name: 'TipoUsuario' } }
-    /**
-     * Find zero or one TipoUsuario that matches the filter.
-     * @param {TipoUsuarioFindUniqueArgs} args - Arguments to find a TipoUsuario
-     * @example
-     * // Get one TipoUsuario
-     * const tipoUsuario = await prisma.tipoUsuario.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends TipoUsuarioFindUniqueArgs>(args: SelectSubset<T, TipoUsuarioFindUniqueArgs<ExtArgs>>): Prisma__TipoUsuarioClient<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one TipoUsuario that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {TipoUsuarioFindUniqueOrThrowArgs} args - Arguments to find a TipoUsuario
-     * @example
-     * // Get one TipoUsuario
-     * const tipoUsuario = await prisma.tipoUsuario.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends TipoUsuarioFindUniqueOrThrowArgs>(args: SelectSubset<T, TipoUsuarioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TipoUsuarioClient<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first TipoUsuario that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TipoUsuarioFindFirstArgs} args - Arguments to find a TipoUsuario
-     * @example
-     * // Get one TipoUsuario
-     * const tipoUsuario = await prisma.tipoUsuario.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends TipoUsuarioFindFirstArgs>(args?: SelectSubset<T, TipoUsuarioFindFirstArgs<ExtArgs>>): Prisma__TipoUsuarioClient<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first TipoUsuario that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TipoUsuarioFindFirstOrThrowArgs} args - Arguments to find a TipoUsuario
-     * @example
-     * // Get one TipoUsuario
-     * const tipoUsuario = await prisma.tipoUsuario.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends TipoUsuarioFindFirstOrThrowArgs>(args?: SelectSubset<T, TipoUsuarioFindFirstOrThrowArgs<ExtArgs>>): Prisma__TipoUsuarioClient<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more TipoUsuarios that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TipoUsuarioFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all TipoUsuarios
-     * const tipoUsuarios = await prisma.tipoUsuario.findMany()
-     * 
-     * // Get first 10 TipoUsuarios
-     * const tipoUsuarios = await prisma.tipoUsuario.findMany({ take: 10 })
-     * 
-     * // Only select the `idTipo`
-     * const tipoUsuarioWithIdTipoOnly = await prisma.tipoUsuario.findMany({ select: { idTipo: true } })
-     * 
-     */
-    findMany<T extends TipoUsuarioFindManyArgs>(args?: SelectSubset<T, TipoUsuarioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a TipoUsuario.
-     * @param {TipoUsuarioCreateArgs} args - Arguments to create a TipoUsuario.
-     * @example
-     * // Create one TipoUsuario
-     * const TipoUsuario = await prisma.tipoUsuario.create({
-     *   data: {
-     *     // ... data to create a TipoUsuario
-     *   }
-     * })
-     * 
-     */
-    create<T extends TipoUsuarioCreateArgs>(args: SelectSubset<T, TipoUsuarioCreateArgs<ExtArgs>>): Prisma__TipoUsuarioClient<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many TipoUsuarios.
-     * @param {TipoUsuarioCreateManyArgs} args - Arguments to create many TipoUsuarios.
-     * @example
-     * // Create many TipoUsuarios
-     * const tipoUsuario = await prisma.tipoUsuario.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends TipoUsuarioCreateManyArgs>(args?: SelectSubset<T, TipoUsuarioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many TipoUsuarios and returns the data saved in the database.
-     * @param {TipoUsuarioCreateManyAndReturnArgs} args - Arguments to create many TipoUsuarios.
-     * @example
-     * // Create many TipoUsuarios
-     * const tipoUsuario = await prisma.tipoUsuario.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many TipoUsuarios and only return the `idTipo`
-     * const tipoUsuarioWithIdTipoOnly = await prisma.tipoUsuario.createManyAndReturn({
-     *   select: { idTipo: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends TipoUsuarioCreateManyAndReturnArgs>(args?: SelectSubset<T, TipoUsuarioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a TipoUsuario.
-     * @param {TipoUsuarioDeleteArgs} args - Arguments to delete one TipoUsuario.
-     * @example
-     * // Delete one TipoUsuario
-     * const TipoUsuario = await prisma.tipoUsuario.delete({
-     *   where: {
-     *     // ... filter to delete one TipoUsuario
-     *   }
-     * })
-     * 
-     */
-    delete<T extends TipoUsuarioDeleteArgs>(args: SelectSubset<T, TipoUsuarioDeleteArgs<ExtArgs>>): Prisma__TipoUsuarioClient<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one TipoUsuario.
-     * @param {TipoUsuarioUpdateArgs} args - Arguments to update one TipoUsuario.
-     * @example
-     * // Update one TipoUsuario
-     * const tipoUsuario = await prisma.tipoUsuario.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends TipoUsuarioUpdateArgs>(args: SelectSubset<T, TipoUsuarioUpdateArgs<ExtArgs>>): Prisma__TipoUsuarioClient<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more TipoUsuarios.
-     * @param {TipoUsuarioDeleteManyArgs} args - Arguments to filter TipoUsuarios to delete.
-     * @example
-     * // Delete a few TipoUsuarios
-     * const { count } = await prisma.tipoUsuario.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends TipoUsuarioDeleteManyArgs>(args?: SelectSubset<T, TipoUsuarioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TipoUsuarios.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TipoUsuarioUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many TipoUsuarios
-     * const tipoUsuario = await prisma.tipoUsuario.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends TipoUsuarioUpdateManyArgs>(args: SelectSubset<T, TipoUsuarioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TipoUsuarios and returns the data updated in the database.
-     * @param {TipoUsuarioUpdateManyAndReturnArgs} args - Arguments to update many TipoUsuarios.
-     * @example
-     * // Update many TipoUsuarios
-     * const tipoUsuario = await prisma.tipoUsuario.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more TipoUsuarios and only return the `idTipo`
-     * const tipoUsuarioWithIdTipoOnly = await prisma.tipoUsuario.updateManyAndReturn({
-     *   select: { idTipo: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends TipoUsuarioUpdateManyAndReturnArgs>(args: SelectSubset<T, TipoUsuarioUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one TipoUsuario.
-     * @param {TipoUsuarioUpsertArgs} args - Arguments to update or create a TipoUsuario.
-     * @example
-     * // Update or create a TipoUsuario
-     * const tipoUsuario = await prisma.tipoUsuario.upsert({
-     *   create: {
-     *     // ... data to create a TipoUsuario
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the TipoUsuario we want to update
-     *   }
-     * })
-     */
-    upsert<T extends TipoUsuarioUpsertArgs>(args: SelectSubset<T, TipoUsuarioUpsertArgs<ExtArgs>>): Prisma__TipoUsuarioClient<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of TipoUsuarios.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TipoUsuarioCountArgs} args - Arguments to filter TipoUsuarios to count.
-     * @example
-     * // Count the number of TipoUsuarios
-     * const count = await prisma.tipoUsuario.count({
-     *   where: {
-     *     // ... the filter for the TipoUsuarios we want to count
-     *   }
-     * })
-    **/
-    count<T extends TipoUsuarioCountArgs>(
-      args?: Subset<T, TipoUsuarioCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TipoUsuarioCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a TipoUsuario.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TipoUsuarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TipoUsuarioAggregateArgs>(args: Subset<T, TipoUsuarioAggregateArgs>): Prisma.PrismaPromise<GetTipoUsuarioAggregateType<T>>
-
-    /**
-     * Group by TipoUsuario.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TipoUsuarioGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TipoUsuarioGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TipoUsuarioGroupByArgs['orderBy'] }
-        : { orderBy?: TipoUsuarioGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TipoUsuarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTipoUsuarioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the TipoUsuario model
-   */
-  readonly fields: TipoUsuarioFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for TipoUsuario.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__TipoUsuarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    usuarios<T extends TipoUsuario$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, TipoUsuario$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the TipoUsuario model
-   */
-  interface TipoUsuarioFieldRefs {
-    readonly idTipo: FieldRef<"TipoUsuario", 'Int'>
-    readonly tipo: FieldRef<"TipoUsuario", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * TipoUsuario findUnique
-   */
-  export type TipoUsuarioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-    /**
-     * Filter, which TipoUsuario to fetch.
-     */
-    where: TipoUsuarioWhereUniqueInput
-  }
-
-  /**
-   * TipoUsuario findUniqueOrThrow
-   */
-  export type TipoUsuarioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-    /**
-     * Filter, which TipoUsuario to fetch.
-     */
-    where: TipoUsuarioWhereUniqueInput
-  }
-
-  /**
-   * TipoUsuario findFirst
-   */
-  export type TipoUsuarioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-    /**
-     * Filter, which TipoUsuario to fetch.
-     */
-    where?: TipoUsuarioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TipoUsuarios to fetch.
-     */
-    orderBy?: TipoUsuarioOrderByWithRelationInput | TipoUsuarioOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TipoUsuarios.
-     */
-    cursor?: TipoUsuarioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TipoUsuarios from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TipoUsuarios.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TipoUsuarios.
-     */
-    distinct?: TipoUsuarioScalarFieldEnum | TipoUsuarioScalarFieldEnum[]
-  }
-
-  /**
-   * TipoUsuario findFirstOrThrow
-   */
-  export type TipoUsuarioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-    /**
-     * Filter, which TipoUsuario to fetch.
-     */
-    where?: TipoUsuarioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TipoUsuarios to fetch.
-     */
-    orderBy?: TipoUsuarioOrderByWithRelationInput | TipoUsuarioOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TipoUsuarios.
-     */
-    cursor?: TipoUsuarioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TipoUsuarios from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TipoUsuarios.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TipoUsuarios.
-     */
-    distinct?: TipoUsuarioScalarFieldEnum | TipoUsuarioScalarFieldEnum[]
-  }
-
-  /**
-   * TipoUsuario findMany
-   */
-  export type TipoUsuarioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-    /**
-     * Filter, which TipoUsuarios to fetch.
-     */
-    where?: TipoUsuarioWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TipoUsuarios to fetch.
-     */
-    orderBy?: TipoUsuarioOrderByWithRelationInput | TipoUsuarioOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing TipoUsuarios.
-     */
-    cursor?: TipoUsuarioWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TipoUsuarios from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TipoUsuarios.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TipoUsuarios.
-     */
-    distinct?: TipoUsuarioScalarFieldEnum | TipoUsuarioScalarFieldEnum[]
-  }
-
-  /**
-   * TipoUsuario create
-   */
-  export type TipoUsuarioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-    /**
-     * The data needed to create a TipoUsuario.
-     */
-    data?: XOR<TipoUsuarioCreateInput, TipoUsuarioUncheckedCreateInput>
-  }
-
-  /**
-   * TipoUsuario createMany
-   */
-  export type TipoUsuarioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many TipoUsuarios.
-     */
-    data: TipoUsuarioCreateManyInput | TipoUsuarioCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * TipoUsuario createManyAndReturn
-   */
-  export type TipoUsuarioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * The data used to create many TipoUsuarios.
-     */
-    data: TipoUsuarioCreateManyInput | TipoUsuarioCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * TipoUsuario update
-   */
-  export type TipoUsuarioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-    /**
-     * The data needed to update a TipoUsuario.
-     */
-    data: XOR<TipoUsuarioUpdateInput, TipoUsuarioUncheckedUpdateInput>
-    /**
-     * Choose, which TipoUsuario to update.
-     */
-    where: TipoUsuarioWhereUniqueInput
-  }
-
-  /**
-   * TipoUsuario updateMany
-   */
-  export type TipoUsuarioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update TipoUsuarios.
-     */
-    data: XOR<TipoUsuarioUpdateManyMutationInput, TipoUsuarioUncheckedUpdateManyInput>
-    /**
-     * Filter which TipoUsuarios to update
-     */
-    where?: TipoUsuarioWhereInput
-    /**
-     * Limit how many TipoUsuarios to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * TipoUsuario updateManyAndReturn
-   */
-  export type TipoUsuarioUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * The data used to update TipoUsuarios.
-     */
-    data: XOR<TipoUsuarioUpdateManyMutationInput, TipoUsuarioUncheckedUpdateManyInput>
-    /**
-     * Filter which TipoUsuarios to update
-     */
-    where?: TipoUsuarioWhereInput
-    /**
-     * Limit how many TipoUsuarios to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * TipoUsuario upsert
-   */
-  export type TipoUsuarioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-    /**
-     * The filter to search for the TipoUsuario to update in case it exists.
-     */
-    where: TipoUsuarioWhereUniqueInput
-    /**
-     * In case the TipoUsuario found by the `where` argument doesn't exist, create a new TipoUsuario with this data.
-     */
-    create: XOR<TipoUsuarioCreateInput, TipoUsuarioUncheckedCreateInput>
-    /**
-     * In case the TipoUsuario was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TipoUsuarioUpdateInput, TipoUsuarioUncheckedUpdateInput>
-  }
-
-  /**
-   * TipoUsuario delete
-   */
-  export type TipoUsuarioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-    /**
-     * Filter which TipoUsuario to delete.
-     */
-    where: TipoUsuarioWhereUniqueInput
-  }
-
-  /**
-   * TipoUsuario deleteMany
-   */
-  export type TipoUsuarioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which TipoUsuarios to delete
-     */
-    where?: TipoUsuarioWhereInput
-    /**
-     * Limit how many TipoUsuarios to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * TipoUsuario.usuarios
-   */
-  export type TipoUsuario$usuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Usuario
-     */
-    select?: UsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Usuario
-     */
-    omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
-    where?: UsuarioWhereInput
-    orderBy?: UsuarioOrderByWithRelationInput | UsuarioOrderByWithRelationInput[]
-    cursor?: UsuarioWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UsuarioScalarFieldEnum | UsuarioScalarFieldEnum[]
-  }
-
-  /**
-   * TipoUsuario without action
-   */
-  export type TipoUsuarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TipoUsuario
-     */
-    select?: TipoUsuarioSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TipoUsuario
-     */
-    omit?: TipoUsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TipoUsuarioInclude<ExtArgs> | null
-  }
-
 
   /**
    * Model Usuario
@@ -2162,35 +1062,45 @@ export namespace Prisma {
 
   export type UsuarioAvgAggregateOutputType = {
     idUser: number | null
-    tipoId: number | null
   }
 
   export type UsuarioSumAggregateOutputType = {
     idUser: number | null
-    tipoId: number | null
   }
 
   export type UsuarioMinAggregateOutputType = {
     idUser: number | null
     nomeUsuario: string | null
+    cpfCnpj: string | null
+    cep: string | null
+    telefone1: string | null
+    email: string | null
     senha: string | null
-    tipoId: number | null
+    tipo: string | null
     status: string | null
   }
 
   export type UsuarioMaxAggregateOutputType = {
     idUser: number | null
     nomeUsuario: string | null
+    cpfCnpj: string | null
+    cep: string | null
+    telefone1: string | null
+    email: string | null
     senha: string | null
-    tipoId: number | null
+    tipo: string | null
     status: string | null
   }
 
   export type UsuarioCountAggregateOutputType = {
     idUser: number
     nomeUsuario: number
+    cpfCnpj: number
+    cep: number
+    telefone1: number
+    email: number
     senha: number
-    tipoId: number
+    tipo: number
     status: number
     _all: number
   }
@@ -2198,35 +1108,45 @@ export namespace Prisma {
 
   export type UsuarioAvgAggregateInputType = {
     idUser?: true
-    tipoId?: true
   }
 
   export type UsuarioSumAggregateInputType = {
     idUser?: true
-    tipoId?: true
   }
 
   export type UsuarioMinAggregateInputType = {
     idUser?: true
     nomeUsuario?: true
+    cpfCnpj?: true
+    cep?: true
+    telefone1?: true
+    email?: true
     senha?: true
-    tipoId?: true
+    tipo?: true
     status?: true
   }
 
   export type UsuarioMaxAggregateInputType = {
     idUser?: true
     nomeUsuario?: true
+    cpfCnpj?: true
+    cep?: true
+    telefone1?: true
+    email?: true
     senha?: true
-    tipoId?: true
+    tipo?: true
     status?: true
   }
 
   export type UsuarioCountAggregateInputType = {
     idUser?: true
     nomeUsuario?: true
+    cpfCnpj?: true
+    cep?: true
+    telefone1?: true
+    email?: true
     senha?: true
-    tipoId?: true
+    tipo?: true
     status?: true
     _all?: true
   }
@@ -2320,8 +1240,12 @@ export namespace Prisma {
   export type UsuarioGroupByOutputType = {
     idUser: number
     nomeUsuario: string | null
+    cpfCnpj: string | null
+    cep: string | null
+    telefone1: string | null
+    email: string | null
     senha: string | null
-    tipoId: number
+    tipo: string | null
     status: string | null
     _count: UsuarioCountAggregateOutputType | null
     _avg: UsuarioAvgAggregateOutputType | null
@@ -2347,59 +1271,65 @@ export namespace Prisma {
   export type UsuarioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     idUser?: boolean
     nomeUsuario?: boolean
+    cpfCnpj?: boolean
+    cep?: boolean
+    telefone1?: boolean
+    email?: boolean
     senha?: boolean
-    tipoId?: boolean
+    tipo?: boolean
     status?: boolean
-    tipo?: boolean | TipoUsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
   export type UsuarioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     idUser?: boolean
     nomeUsuario?: boolean
+    cpfCnpj?: boolean
+    cep?: boolean
+    telefone1?: boolean
+    email?: boolean
     senha?: boolean
-    tipoId?: boolean
+    tipo?: boolean
     status?: boolean
-    tipo?: boolean | TipoUsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
   export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     idUser?: boolean
     nomeUsuario?: boolean
+    cpfCnpj?: boolean
+    cep?: boolean
+    telefone1?: boolean
+    email?: boolean
     senha?: boolean
-    tipoId?: boolean
+    tipo?: boolean
     status?: boolean
-    tipo?: boolean | TipoUsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
   export type UsuarioSelectScalar = {
     idUser?: boolean
     nomeUsuario?: boolean
+    cpfCnpj?: boolean
+    cep?: boolean
+    telefone1?: boolean
+    email?: boolean
     senha?: boolean
-    tipoId?: boolean
+    tipo?: boolean
     status?: boolean
   }
 
-  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idUser" | "nomeUsuario" | "senha" | "tipoId" | "status", ExtArgs["result"]["usuario"]>
-  export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tipo?: boolean | TipoUsuarioDefaultArgs<ExtArgs>
-  }
-  export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tipo?: boolean | TipoUsuarioDefaultArgs<ExtArgs>
-  }
-  export type UsuarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tipo?: boolean | TipoUsuarioDefaultArgs<ExtArgs>
-  }
+  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"idUser" | "nomeUsuario" | "cpfCnpj" | "cep" | "telefone1" | "email" | "senha" | "tipo" | "status", ExtArgs["result"]["usuario"]>
 
   export type $UsuarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Usuario"
-    objects: {
-      tipo: Prisma.$TipoUsuarioPayload<ExtArgs>
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       idUser: number
       nomeUsuario: string | null
+      cpfCnpj: string | null
+      cep: string | null
+      telefone1: string | null
+      email: string | null
       senha: string | null
-      tipoId: number
+      tipo: string | null
       status: string | null
     }, ExtArgs["result"]["usuario"]>
     composites: {}
@@ -2795,7 +1725,6 @@ export namespace Prisma {
    */
   export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    tipo<T extends TipoUsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TipoUsuarioDefaultArgs<ExtArgs>>): Prisma__TipoUsuarioClient<$Result.GetResult<Prisma.$TipoUsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2827,8 +1756,12 @@ export namespace Prisma {
   interface UsuarioFieldRefs {
     readonly idUser: FieldRef<"Usuario", 'Int'>
     readonly nomeUsuario: FieldRef<"Usuario", 'String'>
+    readonly cpfCnpj: FieldRef<"Usuario", 'String'>
+    readonly cep: FieldRef<"Usuario", 'String'>
+    readonly telefone1: FieldRef<"Usuario", 'String'>
+    readonly email: FieldRef<"Usuario", 'String'>
     readonly senha: FieldRef<"Usuario", 'String'>
-    readonly tipoId: FieldRef<"Usuario", 'Int'>
+    readonly tipo: FieldRef<"Usuario", 'String'>
     readonly status: FieldRef<"Usuario", 'String'>
   }
     
@@ -2846,10 +1779,6 @@ export namespace Prisma {
      * Omit specific fields from the Usuario
      */
     omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
     /**
      * Filter, which Usuario to fetch.
      */
@@ -2869,10 +1798,6 @@ export namespace Prisma {
      */
     omit?: UsuarioOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
-    /**
      * Filter, which Usuario to fetch.
      */
     where: UsuarioWhereUniqueInput
@@ -2890,10 +1815,6 @@ export namespace Prisma {
      * Omit specific fields from the Usuario
      */
     omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
     /**
      * Filter, which Usuario to fetch.
      */
@@ -2943,10 +1864,6 @@ export namespace Prisma {
      */
     omit?: UsuarioOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
-    /**
      * Filter, which Usuario to fetch.
      */
     where?: UsuarioWhereInput
@@ -2994,10 +1911,6 @@ export namespace Prisma {
      * Omit specific fields from the Usuario
      */
     omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
     /**
      * Filter, which Usuarios to fetch.
      */
@@ -3047,13 +1960,9 @@ export namespace Prisma {
      */
     omit?: UsuarioOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
-    /**
      * The data needed to create a Usuario.
      */
-    data: XOR<UsuarioCreateInput, UsuarioUncheckedCreateInput>
+    data?: XOR<UsuarioCreateInput, UsuarioUncheckedCreateInput>
   }
 
   /**
@@ -3084,10 +1993,6 @@ export namespace Prisma {
      */
     data: UsuarioCreateManyInput | UsuarioCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3102,10 +2007,6 @@ export namespace Prisma {
      * Omit specific fields from the Usuario
      */
     omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
     /**
      * The data needed to update a Usuario.
      */
@@ -3158,10 +2059,6 @@ export namespace Prisma {
      * Limit how many Usuarios to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3176,10 +2073,6 @@ export namespace Prisma {
      * Omit specific fields from the Usuario
      */
     omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
     /**
      * The filter to search for the Usuario to update in case it exists.
      */
@@ -3206,10 +2099,6 @@ export namespace Prisma {
      * Omit specific fields from the Usuario
      */
     omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
     /**
      * Filter which Usuario to delete.
      */
@@ -3242,10 +2131,6 @@ export namespace Prisma {
      * Omit specific fields from the Usuario
      */
     omit?: UsuarioOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UsuarioInclude<ExtArgs> | null
   }
 
 
@@ -4336,6 +3221,1048 @@ export namespace Prisma {
 
 
   /**
+   * Model Mapa
+   */
+
+  export type AggregateMapa = {
+    _count: MapaCountAggregateOutputType | null
+    _avg: MapaAvgAggregateOutputType | null
+    _sum: MapaSumAggregateOutputType | null
+    _min: MapaMinAggregateOutputType | null
+    _max: MapaMaxAggregateOutputType | null
+  }
+
+  export type MapaAvgAggregateOutputType = {
+    id: number | null
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type MapaSumAggregateOutputType = {
+    id: number | null
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type MapaMinAggregateOutputType = {
+    id: number | null
+    embedUrl: string | null
+    endereco: string | null
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type MapaMaxAggregateOutputType = {
+    id: number | null
+    embedUrl: string | null
+    endereco: string | null
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type MapaCountAggregateOutputType = {
+    id: number
+    embedUrl: number
+    endereco: number
+    latitude: number
+    longitude: number
+    _all: number
+  }
+
+
+  export type MapaAvgAggregateInputType = {
+    id?: true
+    latitude?: true
+    longitude?: true
+  }
+
+  export type MapaSumAggregateInputType = {
+    id?: true
+    latitude?: true
+    longitude?: true
+  }
+
+  export type MapaMinAggregateInputType = {
+    id?: true
+    embedUrl?: true
+    endereco?: true
+    latitude?: true
+    longitude?: true
+  }
+
+  export type MapaMaxAggregateInputType = {
+    id?: true
+    embedUrl?: true
+    endereco?: true
+    latitude?: true
+    longitude?: true
+  }
+
+  export type MapaCountAggregateInputType = {
+    id?: true
+    embedUrl?: true
+    endereco?: true
+    latitude?: true
+    longitude?: true
+    _all?: true
+  }
+
+  export type MapaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Mapa to aggregate.
+     */
+    where?: MapaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Mapas to fetch.
+     */
+    orderBy?: MapaOrderByWithRelationInput | MapaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MapaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Mapas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Mapas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Mapas
+    **/
+    _count?: true | MapaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MapaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MapaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MapaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MapaMaxAggregateInputType
+  }
+
+  export type GetMapaAggregateType<T extends MapaAggregateArgs> = {
+        [P in keyof T & keyof AggregateMapa]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMapa[P]>
+      : GetScalarType<T[P], AggregateMapa[P]>
+  }
+
+
+
+
+  export type MapaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MapaWhereInput
+    orderBy?: MapaOrderByWithAggregationInput | MapaOrderByWithAggregationInput[]
+    by: MapaScalarFieldEnum[] | MapaScalarFieldEnum
+    having?: MapaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MapaCountAggregateInputType | true
+    _avg?: MapaAvgAggregateInputType
+    _sum?: MapaSumAggregateInputType
+    _min?: MapaMinAggregateInputType
+    _max?: MapaMaxAggregateInputType
+  }
+
+  export type MapaGroupByOutputType = {
+    id: number
+    embedUrl: string | null
+    endereco: string | null
+    latitude: number | null
+    longitude: number | null
+    _count: MapaCountAggregateOutputType | null
+    _avg: MapaAvgAggregateOutputType | null
+    _sum: MapaSumAggregateOutputType | null
+    _min: MapaMinAggregateOutputType | null
+    _max: MapaMaxAggregateOutputType | null
+  }
+
+  type GetMapaGroupByPayload<T extends MapaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MapaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MapaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MapaGroupByOutputType[P]>
+            : GetScalarType<T[P], MapaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MapaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    embedUrl?: boolean
+    endereco?: boolean
+    latitude?: boolean
+    longitude?: boolean
+  }, ExtArgs["result"]["mapa"]>
+
+  export type MapaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    embedUrl?: boolean
+    endereco?: boolean
+    latitude?: boolean
+    longitude?: boolean
+  }, ExtArgs["result"]["mapa"]>
+
+  export type MapaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    embedUrl?: boolean
+    endereco?: boolean
+    latitude?: boolean
+    longitude?: boolean
+  }, ExtArgs["result"]["mapa"]>
+
+  export type MapaSelectScalar = {
+    id?: boolean
+    embedUrl?: boolean
+    endereco?: boolean
+    latitude?: boolean
+    longitude?: boolean
+  }
+
+  export type MapaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "embedUrl" | "endereco" | "latitude" | "longitude", ExtArgs["result"]["mapa"]>
+
+  export type $MapaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Mapa"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      embedUrl: string | null
+      endereco: string | null
+      latitude: number | null
+      longitude: number | null
+    }, ExtArgs["result"]["mapa"]>
+    composites: {}
+  }
+
+  type MapaGetPayload<S extends boolean | null | undefined | MapaDefaultArgs> = $Result.GetResult<Prisma.$MapaPayload, S>
+
+  type MapaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MapaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MapaCountAggregateInputType | true
+    }
+
+  export interface MapaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Mapa'], meta: { name: 'Mapa' } }
+    /**
+     * Find zero or one Mapa that matches the filter.
+     * @param {MapaFindUniqueArgs} args - Arguments to find a Mapa
+     * @example
+     * // Get one Mapa
+     * const mapa = await prisma.mapa.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MapaFindUniqueArgs>(args: SelectSubset<T, MapaFindUniqueArgs<ExtArgs>>): Prisma__MapaClient<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Mapa that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MapaFindUniqueOrThrowArgs} args - Arguments to find a Mapa
+     * @example
+     * // Get one Mapa
+     * const mapa = await prisma.mapa.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MapaFindUniqueOrThrowArgs>(args: SelectSubset<T, MapaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MapaClient<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Mapa that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MapaFindFirstArgs} args - Arguments to find a Mapa
+     * @example
+     * // Get one Mapa
+     * const mapa = await prisma.mapa.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MapaFindFirstArgs>(args?: SelectSubset<T, MapaFindFirstArgs<ExtArgs>>): Prisma__MapaClient<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Mapa that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MapaFindFirstOrThrowArgs} args - Arguments to find a Mapa
+     * @example
+     * // Get one Mapa
+     * const mapa = await prisma.mapa.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MapaFindFirstOrThrowArgs>(args?: SelectSubset<T, MapaFindFirstOrThrowArgs<ExtArgs>>): Prisma__MapaClient<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Mapas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MapaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Mapas
+     * const mapas = await prisma.mapa.findMany()
+     * 
+     * // Get first 10 Mapas
+     * const mapas = await prisma.mapa.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mapaWithIdOnly = await prisma.mapa.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MapaFindManyArgs>(args?: SelectSubset<T, MapaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Mapa.
+     * @param {MapaCreateArgs} args - Arguments to create a Mapa.
+     * @example
+     * // Create one Mapa
+     * const Mapa = await prisma.mapa.create({
+     *   data: {
+     *     // ... data to create a Mapa
+     *   }
+     * })
+     * 
+     */
+    create<T extends MapaCreateArgs>(args: SelectSubset<T, MapaCreateArgs<ExtArgs>>): Prisma__MapaClient<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Mapas.
+     * @param {MapaCreateManyArgs} args - Arguments to create many Mapas.
+     * @example
+     * // Create many Mapas
+     * const mapa = await prisma.mapa.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MapaCreateManyArgs>(args?: SelectSubset<T, MapaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Mapas and returns the data saved in the database.
+     * @param {MapaCreateManyAndReturnArgs} args - Arguments to create many Mapas.
+     * @example
+     * // Create many Mapas
+     * const mapa = await prisma.mapa.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Mapas and only return the `id`
+     * const mapaWithIdOnly = await prisma.mapa.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MapaCreateManyAndReturnArgs>(args?: SelectSubset<T, MapaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Mapa.
+     * @param {MapaDeleteArgs} args - Arguments to delete one Mapa.
+     * @example
+     * // Delete one Mapa
+     * const Mapa = await prisma.mapa.delete({
+     *   where: {
+     *     // ... filter to delete one Mapa
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MapaDeleteArgs>(args: SelectSubset<T, MapaDeleteArgs<ExtArgs>>): Prisma__MapaClient<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Mapa.
+     * @param {MapaUpdateArgs} args - Arguments to update one Mapa.
+     * @example
+     * // Update one Mapa
+     * const mapa = await prisma.mapa.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MapaUpdateArgs>(args: SelectSubset<T, MapaUpdateArgs<ExtArgs>>): Prisma__MapaClient<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Mapas.
+     * @param {MapaDeleteManyArgs} args - Arguments to filter Mapas to delete.
+     * @example
+     * // Delete a few Mapas
+     * const { count } = await prisma.mapa.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MapaDeleteManyArgs>(args?: SelectSubset<T, MapaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Mapas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MapaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Mapas
+     * const mapa = await prisma.mapa.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MapaUpdateManyArgs>(args: SelectSubset<T, MapaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Mapas and returns the data updated in the database.
+     * @param {MapaUpdateManyAndReturnArgs} args - Arguments to update many Mapas.
+     * @example
+     * // Update many Mapas
+     * const mapa = await prisma.mapa.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Mapas and only return the `id`
+     * const mapaWithIdOnly = await prisma.mapa.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MapaUpdateManyAndReturnArgs>(args: SelectSubset<T, MapaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Mapa.
+     * @param {MapaUpsertArgs} args - Arguments to update or create a Mapa.
+     * @example
+     * // Update or create a Mapa
+     * const mapa = await prisma.mapa.upsert({
+     *   create: {
+     *     // ... data to create a Mapa
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Mapa we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MapaUpsertArgs>(args: SelectSubset<T, MapaUpsertArgs<ExtArgs>>): Prisma__MapaClient<$Result.GetResult<Prisma.$MapaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Mapas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MapaCountArgs} args - Arguments to filter Mapas to count.
+     * @example
+     * // Count the number of Mapas
+     * const count = await prisma.mapa.count({
+     *   where: {
+     *     // ... the filter for the Mapas we want to count
+     *   }
+     * })
+    **/
+    count<T extends MapaCountArgs>(
+      args?: Subset<T, MapaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MapaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Mapa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MapaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MapaAggregateArgs>(args: Subset<T, MapaAggregateArgs>): Prisma.PrismaPromise<GetMapaAggregateType<T>>
+
+    /**
+     * Group by Mapa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MapaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MapaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MapaGroupByArgs['orderBy'] }
+        : { orderBy?: MapaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MapaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMapaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Mapa model
+   */
+  readonly fields: MapaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Mapa.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MapaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Mapa model
+   */
+  interface MapaFieldRefs {
+    readonly id: FieldRef<"Mapa", 'Int'>
+    readonly embedUrl: FieldRef<"Mapa", 'String'>
+    readonly endereco: FieldRef<"Mapa", 'String'>
+    readonly latitude: FieldRef<"Mapa", 'Float'>
+    readonly longitude: FieldRef<"Mapa", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Mapa findUnique
+   */
+  export type MapaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * Filter, which Mapa to fetch.
+     */
+    where: MapaWhereUniqueInput
+  }
+
+  /**
+   * Mapa findUniqueOrThrow
+   */
+  export type MapaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * Filter, which Mapa to fetch.
+     */
+    where: MapaWhereUniqueInput
+  }
+
+  /**
+   * Mapa findFirst
+   */
+  export type MapaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * Filter, which Mapa to fetch.
+     */
+    where?: MapaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Mapas to fetch.
+     */
+    orderBy?: MapaOrderByWithRelationInput | MapaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Mapas.
+     */
+    cursor?: MapaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Mapas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Mapas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Mapas.
+     */
+    distinct?: MapaScalarFieldEnum | MapaScalarFieldEnum[]
+  }
+
+  /**
+   * Mapa findFirstOrThrow
+   */
+  export type MapaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * Filter, which Mapa to fetch.
+     */
+    where?: MapaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Mapas to fetch.
+     */
+    orderBy?: MapaOrderByWithRelationInput | MapaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Mapas.
+     */
+    cursor?: MapaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Mapas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Mapas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Mapas.
+     */
+    distinct?: MapaScalarFieldEnum | MapaScalarFieldEnum[]
+  }
+
+  /**
+   * Mapa findMany
+   */
+  export type MapaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * Filter, which Mapas to fetch.
+     */
+    where?: MapaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Mapas to fetch.
+     */
+    orderBy?: MapaOrderByWithRelationInput | MapaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Mapas.
+     */
+    cursor?: MapaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Mapas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Mapas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Mapas.
+     */
+    distinct?: MapaScalarFieldEnum | MapaScalarFieldEnum[]
+  }
+
+  /**
+   * Mapa create
+   */
+  export type MapaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Mapa.
+     */
+    data?: XOR<MapaCreateInput, MapaUncheckedCreateInput>
+  }
+
+  /**
+   * Mapa createMany
+   */
+  export type MapaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Mapas.
+     */
+    data: MapaCreateManyInput | MapaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Mapa createManyAndReturn
+   */
+  export type MapaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * The data used to create many Mapas.
+     */
+    data: MapaCreateManyInput | MapaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Mapa update
+   */
+  export type MapaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Mapa.
+     */
+    data: XOR<MapaUpdateInput, MapaUncheckedUpdateInput>
+    /**
+     * Choose, which Mapa to update.
+     */
+    where: MapaWhereUniqueInput
+  }
+
+  /**
+   * Mapa updateMany
+   */
+  export type MapaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Mapas.
+     */
+    data: XOR<MapaUpdateManyMutationInput, MapaUncheckedUpdateManyInput>
+    /**
+     * Filter which Mapas to update
+     */
+    where?: MapaWhereInput
+    /**
+     * Limit how many Mapas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Mapa updateManyAndReturn
+   */
+  export type MapaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * The data used to update Mapas.
+     */
+    data: XOR<MapaUpdateManyMutationInput, MapaUncheckedUpdateManyInput>
+    /**
+     * Filter which Mapas to update
+     */
+    where?: MapaWhereInput
+    /**
+     * Limit how many Mapas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Mapa upsert
+   */
+  export type MapaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Mapa to update in case it exists.
+     */
+    where: MapaWhereUniqueInput
+    /**
+     * In case the Mapa found by the `where` argument doesn't exist, create a new Mapa with this data.
+     */
+    create: XOR<MapaCreateInput, MapaUncheckedCreateInput>
+    /**
+     * In case the Mapa was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MapaUpdateInput, MapaUncheckedUpdateInput>
+  }
+
+  /**
+   * Mapa delete
+   */
+  export type MapaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+    /**
+     * Filter which Mapa to delete.
+     */
+    where: MapaWhereUniqueInput
+  }
+
+  /**
+   * Mapa deleteMany
+   */
+  export type MapaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Mapas to delete
+     */
+    where?: MapaWhereInput
+    /**
+     * Limit how many Mapas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Mapa without action
+   */
+  export type MapaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mapa
+     */
+    select?: MapaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mapa
+     */
+    omit?: MapaOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4349,19 +4276,15 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const TipoUsuarioScalarFieldEnum: {
-    idTipo: 'idTipo',
-    tipo: 'tipo'
-  };
-
-  export type TipoUsuarioScalarFieldEnum = (typeof TipoUsuarioScalarFieldEnum)[keyof typeof TipoUsuarioScalarFieldEnum]
-
-
   export const UsuarioScalarFieldEnum: {
     idUser: 'idUser',
     nomeUsuario: 'nomeUsuario',
+    cpfCnpj: 'cpfCnpj',
+    cep: 'cep',
+    telefone1: 'telefone1',
+    email: 'email',
     senha: 'senha',
-    tipoId: 'tipoId',
+    tipo: 'tipo',
     status: 'status'
   };
 
@@ -4381,6 +4304,17 @@ export namespace Prisma {
   };
 
   export type NoticiaScalarFieldEnum = (typeof NoticiaScalarFieldEnum)[keyof typeof NoticiaScalarFieldEnum]
+
+
+  export const MapaScalarFieldEnum: {
+    id: 'id',
+    embedUrl: 'embedUrl',
+    endereco: 'endereco',
+    latitude: 'latitude',
+    longitude: 'longitude'
+  };
+
+  export type MapaScalarFieldEnum = (typeof MapaScalarFieldEnum)[keyof typeof MapaScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4471,67 +4405,31 @@ export namespace Prisma {
    */
 
 
-  export type TipoUsuarioWhereInput = {
-    AND?: TipoUsuarioWhereInput | TipoUsuarioWhereInput[]
-    OR?: TipoUsuarioWhereInput[]
-    NOT?: TipoUsuarioWhereInput | TipoUsuarioWhereInput[]
-    idTipo?: IntFilter<"TipoUsuario"> | number
-    tipo?: StringNullableFilter<"TipoUsuario"> | string | null
-    usuarios?: UsuarioListRelationFilter
-  }
-
-  export type TipoUsuarioOrderByWithRelationInput = {
-    idTipo?: SortOrder
-    tipo?: SortOrderInput | SortOrder
-    usuarios?: UsuarioOrderByRelationAggregateInput
-  }
-
-  export type TipoUsuarioWhereUniqueInput = Prisma.AtLeast<{
-    idTipo?: number
-    AND?: TipoUsuarioWhereInput | TipoUsuarioWhereInput[]
-    OR?: TipoUsuarioWhereInput[]
-    NOT?: TipoUsuarioWhereInput | TipoUsuarioWhereInput[]
-    tipo?: StringNullableFilter<"TipoUsuario"> | string | null
-    usuarios?: UsuarioListRelationFilter
-  }, "idTipo">
-
-  export type TipoUsuarioOrderByWithAggregationInput = {
-    idTipo?: SortOrder
-    tipo?: SortOrderInput | SortOrder
-    _count?: TipoUsuarioCountOrderByAggregateInput
-    _avg?: TipoUsuarioAvgOrderByAggregateInput
-    _max?: TipoUsuarioMaxOrderByAggregateInput
-    _min?: TipoUsuarioMinOrderByAggregateInput
-    _sum?: TipoUsuarioSumOrderByAggregateInput
-  }
-
-  export type TipoUsuarioScalarWhereWithAggregatesInput = {
-    AND?: TipoUsuarioScalarWhereWithAggregatesInput | TipoUsuarioScalarWhereWithAggregatesInput[]
-    OR?: TipoUsuarioScalarWhereWithAggregatesInput[]
-    NOT?: TipoUsuarioScalarWhereWithAggregatesInput | TipoUsuarioScalarWhereWithAggregatesInput[]
-    idTipo?: IntWithAggregatesFilter<"TipoUsuario"> | number
-    tipo?: StringNullableWithAggregatesFilter<"TipoUsuario"> | string | null
-  }
-
   export type UsuarioWhereInput = {
     AND?: UsuarioWhereInput | UsuarioWhereInput[]
     OR?: UsuarioWhereInput[]
     NOT?: UsuarioWhereInput | UsuarioWhereInput[]
     idUser?: IntFilter<"Usuario"> | number
     nomeUsuario?: StringNullableFilter<"Usuario"> | string | null
+    cpfCnpj?: StringNullableFilter<"Usuario"> | string | null
+    cep?: StringNullableFilter<"Usuario"> | string | null
+    telefone1?: StringNullableFilter<"Usuario"> | string | null
+    email?: StringNullableFilter<"Usuario"> | string | null
     senha?: StringNullableFilter<"Usuario"> | string | null
-    tipoId?: IntFilter<"Usuario"> | number
+    tipo?: StringNullableFilter<"Usuario"> | string | null
     status?: StringNullableFilter<"Usuario"> | string | null
-    tipo?: XOR<TipoUsuarioScalarRelationFilter, TipoUsuarioWhereInput>
   }
 
   export type UsuarioOrderByWithRelationInput = {
     idUser?: SortOrder
     nomeUsuario?: SortOrderInput | SortOrder
+    cpfCnpj?: SortOrderInput | SortOrder
+    cep?: SortOrderInput | SortOrder
+    telefone1?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
     senha?: SortOrderInput | SortOrder
-    tipoId?: SortOrder
+    tipo?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
-    tipo?: TipoUsuarioOrderByWithRelationInput
   }
 
   export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -4540,17 +4438,24 @@ export namespace Prisma {
     OR?: UsuarioWhereInput[]
     NOT?: UsuarioWhereInput | UsuarioWhereInput[]
     nomeUsuario?: StringNullableFilter<"Usuario"> | string | null
+    cpfCnpj?: StringNullableFilter<"Usuario"> | string | null
+    cep?: StringNullableFilter<"Usuario"> | string | null
+    telefone1?: StringNullableFilter<"Usuario"> | string | null
+    email?: StringNullableFilter<"Usuario"> | string | null
     senha?: StringNullableFilter<"Usuario"> | string | null
-    tipoId?: IntFilter<"Usuario"> | number
+    tipo?: StringNullableFilter<"Usuario"> | string | null
     status?: StringNullableFilter<"Usuario"> | string | null
-    tipo?: XOR<TipoUsuarioScalarRelationFilter, TipoUsuarioWhereInput>
   }, "idUser">
 
   export type UsuarioOrderByWithAggregationInput = {
     idUser?: SortOrder
     nomeUsuario?: SortOrderInput | SortOrder
+    cpfCnpj?: SortOrderInput | SortOrder
+    cep?: SortOrderInput | SortOrder
+    telefone1?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
     senha?: SortOrderInput | SortOrder
-    tipoId?: SortOrder
+    tipo?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     _count?: UsuarioCountOrderByAggregateInput
     _avg?: UsuarioAvgOrderByAggregateInput
@@ -4565,8 +4470,12 @@ export namespace Prisma {
     NOT?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
     idUser?: IntWithAggregatesFilter<"Usuario"> | number
     nomeUsuario?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+    cpfCnpj?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+    cep?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+    telefone1?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+    email?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
     senha?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
-    tipoId?: IntWithAggregatesFilter<"Usuario"> | number
+    tipo?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
     status?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
   }
 
@@ -4644,91 +4553,138 @@ export namespace Prisma {
     data?: DateTimeWithAggregatesFilter<"Noticia"> | Date | string
   }
 
-  export type TipoUsuarioCreateInput = {
-    tipo?: string | null
-    usuarios?: UsuarioCreateNestedManyWithoutTipoInput
+  export type MapaWhereInput = {
+    AND?: MapaWhereInput | MapaWhereInput[]
+    OR?: MapaWhereInput[]
+    NOT?: MapaWhereInput | MapaWhereInput[]
+    id?: IntFilter<"Mapa"> | number
+    embedUrl?: StringNullableFilter<"Mapa"> | string | null
+    endereco?: StringNullableFilter<"Mapa"> | string | null
+    latitude?: FloatNullableFilter<"Mapa"> | number | null
+    longitude?: FloatNullableFilter<"Mapa"> | number | null
   }
 
-  export type TipoUsuarioUncheckedCreateInput = {
-    idTipo?: number
-    tipo?: string | null
-    usuarios?: UsuarioUncheckedCreateNestedManyWithoutTipoInput
+  export type MapaOrderByWithRelationInput = {
+    id?: SortOrder
+    embedUrl?: SortOrderInput | SortOrder
+    endereco?: SortOrderInput | SortOrder
+    latitude?: SortOrderInput | SortOrder
+    longitude?: SortOrderInput | SortOrder
   }
 
-  export type TipoUsuarioUpdateInput = {
-    tipo?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: UsuarioUpdateManyWithoutTipoNestedInput
+  export type MapaWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: MapaWhereInput | MapaWhereInput[]
+    OR?: MapaWhereInput[]
+    NOT?: MapaWhereInput | MapaWhereInput[]
+    embedUrl?: StringNullableFilter<"Mapa"> | string | null
+    endereco?: StringNullableFilter<"Mapa"> | string | null
+    latitude?: FloatNullableFilter<"Mapa"> | number | null
+    longitude?: FloatNullableFilter<"Mapa"> | number | null
+  }, "id">
+
+  export type MapaOrderByWithAggregationInput = {
+    id?: SortOrder
+    embedUrl?: SortOrderInput | SortOrder
+    endereco?: SortOrderInput | SortOrder
+    latitude?: SortOrderInput | SortOrder
+    longitude?: SortOrderInput | SortOrder
+    _count?: MapaCountOrderByAggregateInput
+    _avg?: MapaAvgOrderByAggregateInput
+    _max?: MapaMaxOrderByAggregateInput
+    _min?: MapaMinOrderByAggregateInput
+    _sum?: MapaSumOrderByAggregateInput
   }
 
-  export type TipoUsuarioUncheckedUpdateInput = {
-    idTipo?: IntFieldUpdateOperationsInput | number
-    tipo?: NullableStringFieldUpdateOperationsInput | string | null
-    usuarios?: UsuarioUncheckedUpdateManyWithoutTipoNestedInput
-  }
-
-  export type TipoUsuarioCreateManyInput = {
-    idTipo?: number
-    tipo?: string | null
-  }
-
-  export type TipoUsuarioUpdateManyMutationInput = {
-    tipo?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TipoUsuarioUncheckedUpdateManyInput = {
-    idTipo?: IntFieldUpdateOperationsInput | number
-    tipo?: NullableStringFieldUpdateOperationsInput | string | null
+  export type MapaScalarWhereWithAggregatesInput = {
+    AND?: MapaScalarWhereWithAggregatesInput | MapaScalarWhereWithAggregatesInput[]
+    OR?: MapaScalarWhereWithAggregatesInput[]
+    NOT?: MapaScalarWhereWithAggregatesInput | MapaScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Mapa"> | number
+    embedUrl?: StringNullableWithAggregatesFilter<"Mapa"> | string | null
+    endereco?: StringNullableWithAggregatesFilter<"Mapa"> | string | null
+    latitude?: FloatNullableWithAggregatesFilter<"Mapa"> | number | null
+    longitude?: FloatNullableWithAggregatesFilter<"Mapa"> | number | null
   }
 
   export type UsuarioCreateInput = {
     nomeUsuario?: string | null
+    cpfCnpj?: string | null
+    cep?: string | null
+    telefone1?: string | null
+    email?: string | null
     senha?: string | null
+    tipo?: string | null
     status?: string | null
-    tipo: TipoUsuarioCreateNestedOneWithoutUsuariosInput
   }
 
   export type UsuarioUncheckedCreateInput = {
     idUser?: number
     nomeUsuario?: string | null
+    cpfCnpj?: string | null
+    cep?: string | null
+    telefone1?: string | null
+    email?: string | null
     senha?: string | null
-    tipoId: number
+    tipo?: string | null
     status?: string | null
   }
 
   export type UsuarioUpdateInput = {
     nomeUsuario?: NullableStringFieldUpdateOperationsInput | string | null
+    cpfCnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    cep?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone1?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     senha?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
-    tipo?: TipoUsuarioUpdateOneRequiredWithoutUsuariosNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
     idUser?: IntFieldUpdateOperationsInput | number
     nomeUsuario?: NullableStringFieldUpdateOperationsInput | string | null
+    cpfCnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    cep?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone1?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     senha?: NullableStringFieldUpdateOperationsInput | string | null
-    tipoId?: IntFieldUpdateOperationsInput | number
+    tipo?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UsuarioCreateManyInput = {
     idUser?: number
     nomeUsuario?: string | null
+    cpfCnpj?: string | null
+    cep?: string | null
+    telefone1?: string | null
+    email?: string | null
     senha?: string | null
-    tipoId: number
+    tipo?: string | null
     status?: string | null
   }
 
   export type UsuarioUpdateManyMutationInput = {
     nomeUsuario?: NullableStringFieldUpdateOperationsInput | string | null
+    cpfCnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    cep?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone1?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     senha?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UsuarioUncheckedUpdateManyInput = {
     idUser?: IntFieldUpdateOperationsInput | number
     nomeUsuario?: NullableStringFieldUpdateOperationsInput | string | null
+    cpfCnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    cep?: NullableStringFieldUpdateOperationsInput | string | null
+    telefone1?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
     senha?: NullableStringFieldUpdateOperationsInput | string | null
-    tipoId?: IntFieldUpdateOperationsInput | number
+    tipo?: NullableStringFieldUpdateOperationsInput | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -4813,6 +4769,59 @@ export namespace Prisma {
     data?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MapaCreateInput = {
+    embedUrl?: string | null
+    endereco?: string | null
+    latitude?: number | null
+    longitude?: number | null
+  }
+
+  export type MapaUncheckedCreateInput = {
+    id?: number
+    embedUrl?: string | null
+    endereco?: string | null
+    latitude?: number | null
+    longitude?: number | null
+  }
+
+  export type MapaUpdateInput = {
+    embedUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    endereco?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type MapaUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    embedUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    endereco?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type MapaCreateManyInput = {
+    id?: number
+    embedUrl?: string | null
+    endereco?: string | null
+    latitude?: number | null
+    longitude?: number | null
+  }
+
+  export type MapaUpdateManyMutationInput = {
+    embedUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    endereco?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type MapaUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    embedUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    endereco?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -4839,42 +4848,53 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type UsuarioListRelationFilter = {
-    every?: UsuarioWhereInput
-    some?: UsuarioWhereInput
-    none?: UsuarioWhereInput
-  }
-
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
-  export type UsuarioOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TipoUsuarioCountOrderByAggregateInput = {
-    idTipo?: SortOrder
+  export type UsuarioCountOrderByAggregateInput = {
+    idUser?: SortOrder
+    nomeUsuario?: SortOrder
+    cpfCnpj?: SortOrder
+    cep?: SortOrder
+    telefone1?: SortOrder
+    email?: SortOrder
+    senha?: SortOrder
     tipo?: SortOrder
+    status?: SortOrder
   }
 
-  export type TipoUsuarioAvgOrderByAggregateInput = {
-    idTipo?: SortOrder
+  export type UsuarioAvgOrderByAggregateInput = {
+    idUser?: SortOrder
   }
 
-  export type TipoUsuarioMaxOrderByAggregateInput = {
-    idTipo?: SortOrder
+  export type UsuarioMaxOrderByAggregateInput = {
+    idUser?: SortOrder
+    nomeUsuario?: SortOrder
+    cpfCnpj?: SortOrder
+    cep?: SortOrder
+    telefone1?: SortOrder
+    email?: SortOrder
+    senha?: SortOrder
     tipo?: SortOrder
+    status?: SortOrder
   }
 
-  export type TipoUsuarioMinOrderByAggregateInput = {
-    idTipo?: SortOrder
+  export type UsuarioMinOrderByAggregateInput = {
+    idUser?: SortOrder
+    nomeUsuario?: SortOrder
+    cpfCnpj?: SortOrder
+    cep?: SortOrder
+    telefone1?: SortOrder
+    email?: SortOrder
+    senha?: SortOrder
     tipo?: SortOrder
+    status?: SortOrder
   }
 
-  export type TipoUsuarioSumOrderByAggregateInput = {
-    idTipo?: SortOrder
+  export type UsuarioSumOrderByAggregateInput = {
+    idUser?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -4909,45 +4929,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type TipoUsuarioScalarRelationFilter = {
-    is?: TipoUsuarioWhereInput
-    isNot?: TipoUsuarioWhereInput
-  }
-
-  export type UsuarioCountOrderByAggregateInput = {
-    idUser?: SortOrder
-    nomeUsuario?: SortOrder
-    senha?: SortOrder
-    tipoId?: SortOrder
-    status?: SortOrder
-  }
-
-  export type UsuarioAvgOrderByAggregateInput = {
-    idUser?: SortOrder
-    tipoId?: SortOrder
-  }
-
-  export type UsuarioMaxOrderByAggregateInput = {
-    idUser?: SortOrder
-    nomeUsuario?: SortOrder
-    senha?: SortOrder
-    tipoId?: SortOrder
-    status?: SortOrder
-  }
-
-  export type UsuarioMinOrderByAggregateInput = {
-    idUser?: SortOrder
-    nomeUsuario?: SortOrder
-    senha?: SortOrder
-    tipoId?: SortOrder
-    status?: SortOrder
-  }
-
-  export type UsuarioSumOrderByAggregateInput = {
-    idUser?: SortOrder
-    tipoId?: SortOrder
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -5052,36 +5033,71 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type UsuarioCreateNestedManyWithoutTipoInput = {
-    create?: XOR<UsuarioCreateWithoutTipoInput, UsuarioUncheckedCreateWithoutTipoInput> | UsuarioCreateWithoutTipoInput[] | UsuarioUncheckedCreateWithoutTipoInput[]
-    connectOrCreate?: UsuarioCreateOrConnectWithoutTipoInput | UsuarioCreateOrConnectWithoutTipoInput[]
-    createMany?: UsuarioCreateManyTipoInputEnvelope
-    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type UsuarioUncheckedCreateNestedManyWithoutTipoInput = {
-    create?: XOR<UsuarioCreateWithoutTipoInput, UsuarioUncheckedCreateWithoutTipoInput> | UsuarioCreateWithoutTipoInput[] | UsuarioUncheckedCreateWithoutTipoInput[]
-    connectOrCreate?: UsuarioCreateOrConnectWithoutTipoInput | UsuarioCreateOrConnectWithoutTipoInput[]
-    createMany?: UsuarioCreateManyTipoInputEnvelope
-    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+  export type MapaCountOrderByAggregateInput = {
+    id?: SortOrder
+    embedUrl?: SortOrder
+    endereco?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type MapaAvgOrderByAggregateInput = {
+    id?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type MapaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    embedUrl?: SortOrder
+    endereco?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type MapaMinOrderByAggregateInput = {
+    id?: SortOrder
+    embedUrl?: SortOrder
+    endereco?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type MapaSumOrderByAggregateInput = {
+    id?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
-  }
-
-  export type UsuarioUpdateManyWithoutTipoNestedInput = {
-    create?: XOR<UsuarioCreateWithoutTipoInput, UsuarioUncheckedCreateWithoutTipoInput> | UsuarioCreateWithoutTipoInput[] | UsuarioUncheckedCreateWithoutTipoInput[]
-    connectOrCreate?: UsuarioCreateOrConnectWithoutTipoInput | UsuarioCreateOrConnectWithoutTipoInput[]
-    upsert?: UsuarioUpsertWithWhereUniqueWithoutTipoInput | UsuarioUpsertWithWhereUniqueWithoutTipoInput[]
-    createMany?: UsuarioCreateManyTipoInputEnvelope
-    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    update?: UsuarioUpdateWithWhereUniqueWithoutTipoInput | UsuarioUpdateWithWhereUniqueWithoutTipoInput[]
-    updateMany?: UsuarioUpdateManyWithWhereWithoutTipoInput | UsuarioUpdateManyWithWhereWithoutTipoInput[]
-    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -5092,40 +5108,20 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UsuarioUncheckedUpdateManyWithoutTipoNestedInput = {
-    create?: XOR<UsuarioCreateWithoutTipoInput, UsuarioUncheckedCreateWithoutTipoInput> | UsuarioCreateWithoutTipoInput[] | UsuarioUncheckedCreateWithoutTipoInput[]
-    connectOrCreate?: UsuarioCreateOrConnectWithoutTipoInput | UsuarioCreateOrConnectWithoutTipoInput[]
-    upsert?: UsuarioUpsertWithWhereUniqueWithoutTipoInput | UsuarioUpsertWithWhereUniqueWithoutTipoInput[]
-    createMany?: UsuarioCreateManyTipoInputEnvelope
-    set?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    disconnect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    delete?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
-    update?: UsuarioUpdateWithWhereUniqueWithoutTipoInput | UsuarioUpdateWithWhereUniqueWithoutTipoInput[]
-    updateMany?: UsuarioUpdateManyWithWhereWithoutTipoInput | UsuarioUpdateManyWithWhereWithoutTipoInput[]
-    deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
-  }
-
-  export type TipoUsuarioCreateNestedOneWithoutUsuariosInput = {
-    create?: XOR<TipoUsuarioCreateWithoutUsuariosInput, TipoUsuarioUncheckedCreateWithoutUsuariosInput>
-    connectOrCreate?: TipoUsuarioCreateOrConnectWithoutUsuariosInput
-    connect?: TipoUsuarioWhereUniqueInput
-  }
-
-  export type TipoUsuarioUpdateOneRequiredWithoutUsuariosNestedInput = {
-    create?: XOR<TipoUsuarioCreateWithoutUsuariosInput, TipoUsuarioUncheckedCreateWithoutUsuariosInput>
-    connectOrCreate?: TipoUsuarioCreateOrConnectWithoutUsuariosInput
-    upsert?: TipoUsuarioUpsertWithoutUsuariosInput
-    connect?: TipoUsuarioWhereUniqueInput
-    update?: XOR<XOR<TipoUsuarioUpdateToOneWithWhereWithoutUsuariosInput, TipoUsuarioUpdateWithoutUsuariosInput>, TipoUsuarioUncheckedUpdateWithoutUsuariosInput>
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5264,115 +5260,31 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type UsuarioCreateWithoutTipoInput = {
-    nomeUsuario?: string | null
-    senha?: string | null
-    status?: string | null
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type UsuarioUncheckedCreateWithoutTipoInput = {
-    idUser?: number
-    nomeUsuario?: string | null
-    senha?: string | null
-    status?: string | null
-  }
-
-  export type UsuarioCreateOrConnectWithoutTipoInput = {
-    where: UsuarioWhereUniqueInput
-    create: XOR<UsuarioCreateWithoutTipoInput, UsuarioUncheckedCreateWithoutTipoInput>
-  }
-
-  export type UsuarioCreateManyTipoInputEnvelope = {
-    data: UsuarioCreateManyTipoInput | UsuarioCreateManyTipoInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UsuarioUpsertWithWhereUniqueWithoutTipoInput = {
-    where: UsuarioWhereUniqueInput
-    update: XOR<UsuarioUpdateWithoutTipoInput, UsuarioUncheckedUpdateWithoutTipoInput>
-    create: XOR<UsuarioCreateWithoutTipoInput, UsuarioUncheckedCreateWithoutTipoInput>
-  }
-
-  export type UsuarioUpdateWithWhereUniqueWithoutTipoInput = {
-    where: UsuarioWhereUniqueInput
-    data: XOR<UsuarioUpdateWithoutTipoInput, UsuarioUncheckedUpdateWithoutTipoInput>
-  }
-
-  export type UsuarioUpdateManyWithWhereWithoutTipoInput = {
-    where: UsuarioScalarWhereInput
-    data: XOR<UsuarioUpdateManyMutationInput, UsuarioUncheckedUpdateManyWithoutTipoInput>
-  }
-
-  export type UsuarioScalarWhereInput = {
-    AND?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
-    OR?: UsuarioScalarWhereInput[]
-    NOT?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
-    idUser?: IntFilter<"Usuario"> | number
-    nomeUsuario?: StringNullableFilter<"Usuario"> | string | null
-    senha?: StringNullableFilter<"Usuario"> | string | null
-    tipoId?: IntFilter<"Usuario"> | number
-    status?: StringNullableFilter<"Usuario"> | string | null
-  }
-
-  export type TipoUsuarioCreateWithoutUsuariosInput = {
-    tipo?: string | null
-  }
-
-  export type TipoUsuarioUncheckedCreateWithoutUsuariosInput = {
-    idTipo?: number
-    tipo?: string | null
-  }
-
-  export type TipoUsuarioCreateOrConnectWithoutUsuariosInput = {
-    where: TipoUsuarioWhereUniqueInput
-    create: XOR<TipoUsuarioCreateWithoutUsuariosInput, TipoUsuarioUncheckedCreateWithoutUsuariosInput>
-  }
-
-  export type TipoUsuarioUpsertWithoutUsuariosInput = {
-    update: XOR<TipoUsuarioUpdateWithoutUsuariosInput, TipoUsuarioUncheckedUpdateWithoutUsuariosInput>
-    create: XOR<TipoUsuarioCreateWithoutUsuariosInput, TipoUsuarioUncheckedCreateWithoutUsuariosInput>
-    where?: TipoUsuarioWhereInput
-  }
-
-  export type TipoUsuarioUpdateToOneWithWhereWithoutUsuariosInput = {
-    where?: TipoUsuarioWhereInput
-    data: XOR<TipoUsuarioUpdateWithoutUsuariosInput, TipoUsuarioUncheckedUpdateWithoutUsuariosInput>
-  }
-
-  export type TipoUsuarioUpdateWithoutUsuariosInput = {
-    tipo?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TipoUsuarioUncheckedUpdateWithoutUsuariosInput = {
-    idTipo?: IntFieldUpdateOperationsInput | number
-    tipo?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type UsuarioCreateManyTipoInput = {
-    idUser?: number
-    nomeUsuario?: string | null
-    senha?: string | null
-    status?: string | null
-  }
-
-  export type UsuarioUpdateWithoutTipoInput = {
-    nomeUsuario?: NullableStringFieldUpdateOperationsInput | string | null
-    senha?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type UsuarioUncheckedUpdateWithoutTipoInput = {
-    idUser?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: NullableStringFieldUpdateOperationsInput | string | null
-    senha?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type UsuarioUncheckedUpdateManyWithoutTipoInput = {
-    idUser?: IntFieldUpdateOperationsInput | number
-    nomeUsuario?: NullableStringFieldUpdateOperationsInput | string | null
-    senha?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
 

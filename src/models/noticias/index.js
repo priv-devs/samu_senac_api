@@ -104,17 +104,20 @@ module.exports = class Noticias {
                 data: true
             }
         });
-
-        // map to old snake_case keys
+ 
+        if (filtros.categoria === 'secundaria') {
+            return noticias.map((n) => ({
+                id: n.idNoticia,
+                resumo: n.resumo,
+                imagem: n.imagem || n.banner
+            }));
+        }
+ 
         return noticias.map((n) => ({
-            id_noticia: n.idNoticia,
+            id: n.idNoticia,
             titulo: n.titulo,
             resumo: n.resumo,
-            imagem: n.imagem,
-            banner: n.banner,
-            conteudo: n.conteudo,
-            link: n.link,
-            categoria: n.categoria,
+            banner: n.banner || n.imagem,
             data: n.data
         }));
     }
@@ -136,7 +139,7 @@ module.exports = class Noticias {
         if (!n) return null;
 
         return {
-            id_noticia: n.idNoticia,
+            id: n.idNoticia,
             titulo: n.titulo,
             resumo: n.resumo,
             imagem: n.banner || n.imagem,
@@ -165,7 +168,7 @@ module.exports = class Noticias {
         if (!n) return null;
 
         return {
-            id_noticia: n.idNoticia,
+            id: n.idNoticia,
             titulo: n.titulo,
             resumo: n.resumo,
             imagem: n.imagem,
