@@ -30,6 +30,7 @@ module.exports = {
         }
     },
 
+
     async listar(req, res, next) {
         try {
             const { id } = req.params;

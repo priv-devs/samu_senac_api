@@ -1,11 +1,5 @@
-
-
 require('dotenv').config();
 const { Pool } = require('pg');
-//process.env.DATABASE_URL
-// const pool = new Pool({
-//   connectionString: DATABASE_URL=" postgresql://postgres:123@localhost:5432/postgres" ,
-// });
 
 const pool = new Pool({
   connectionString: "postgresql://postgres:123@localhost:5432/postgres",
@@ -36,6 +30,43 @@ async function initDB() {
     `);
 
     await client.query(`
+      CREATE TABLE IF NOT EXISTS noticias (
+        id_noticia SERIAL PRIMARY KEY,
+        titulo VARCHAR(150),
+        resumo TEXT NOT NULL,
+        imagem TEXT,
+        banner TEXT,
+        conteudo TEXT,
+        link TEXT,
+        categoria VARCHAR(20) NOT NULL DEFAULT 'diaria',
+        data DATE NOT NULL DEFAULT CURRENT_DATE
+      );
+    `);
+
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS course_page (
+        id_course_page SERIAL PRIMARY KEY,
+        payload JSONB NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS courses (
+        id_course SERIAL PRIMARY KEY,
+        title VARCHAR(150) NOT NULL,
+        description TEXT,
+        thumbnail TEXT,
+        status VARCHAR(30) DEFAULT 'Rascunho',
+        duration VARCHAR(50),
+        level VARCHAR(50),
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    await client.query(`
       INSERT INTO tipo_usuario (tipo)
       VALUES ('cliente'), ('admin')
       ON CONFLICT (tipo) DO NOTHING;
@@ -50,4 +81,5 @@ async function initDB() {
 }
 
 initDB();
+
 module.exports = pool;

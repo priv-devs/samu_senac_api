@@ -1,5 +1,7 @@
 const { Router } = require('express');
+
 const noticiasController = require('../../controllers/noticias');
+
 
 const routes = Router();
 
