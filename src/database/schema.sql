@@ -44,3 +44,43 @@ CREATE TABLE IF NOT EXISTS courses (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS sobre_trajetoria (
+    id SERIAL PRIMARY KEY,
+    tag VARCHAR(100) NOT NULL,
+    titulo VARCHAR(150) NOT NULL,
+    descricao TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sobre_equipe (
+    id SERIAL PRIMARY KEY,
+    tag VARCHAR(100) NOT NULL,
+    titulo VARCHAR(150) NOT NULL,
+    descricao TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sobre_cards_equipe (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    descricao TEXT NOT NULL
+);
+
+INSERT INTO sobre_trajetoria (tag, titulo, descricao)
+VALUES (
+    'Nossa trajetória',
+    'Breve histórico',
+    'O SAMU de Dourados atua há anos no atendimento à população de Dourados e região, integrando redes de saúde e atendendo casos clínicos, traumáticos e pediátricos.'
+);
+
+INSERT INTO sobre_equipe (tag, titulo, descricao)
+VALUES (
+    'Equipe',
+    'Profissionais em campo',
+    'Equipes compostas por condutor socorrista, técnico de enfermagem e enfermeiro, treinadas para atendimento de urgência e reanimação.'
+);
+
+INSERT INTO sobre_cards_equipe (titulo, descricao) VALUES
+    ('Coordenação', 'Responsável pela gestão e integração com a rede de saúde local.'),
+    ('Enfermagem',  'Enfermeiros especializados em emergência e suporte avançado.'),
+    ('Técnicos',    'Técnicos em enfermagem e condutores socorristas capacitados.'),
+    ('Comunicação', 'Central de regulação médica e recepção das chamadas 192.');
