@@ -1,50 +1,49 @@
 CREATE TABLE IF NOT EXISTS tipo_usuario (
-    id_tipo SERIAL PRIMARY KEY,
-    tipo VARCHAR(15)
+    id_tipo INTEGER PRIMARY KEY AUTOINCREMENT,
+    tipo TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS usuarios (
-    id_user SERIAL PRIMARY KEY,
-    nome_usuario VARCHAR(100),
+    id_user INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome_usuario TEXT NOT NULL,
     senha TEXT,
-    tipo INT,
-    status VARCHAR(15),
+    tipo INTEGER,
+    status TEXT,
     FOREIGN KEY (tipo) REFERENCES tipo_usuario(id_tipo)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
 
-INSERT INTO tipo_usuario (tipo) VALUES ('user');
-INSERT INTO tipo_usuario (tipo) VALUES ('admin');
-INSERT INTO tipo_usuario (tipo) VALUES ('root');
+INSERT OR IGNORE INTO tipo_usuario (tipo) VALUES ('cliente');
+INSERT OR IGNORE INTO tipo_usuario (tipo) VALUES ('admin');
 
 CREATE TABLE IF NOT EXISTS noticias (
-    id_noticia SERIAL PRIMARY KEY,
-    titulo VARCHAR(150),
+    id_noticia INTEGER PRIMARY KEY AUTOINCREMENT,
+    titulo TEXT,
     resumo TEXT NOT NULL,
     imagem TEXT,
     banner TEXT,
     conteudo TEXT,
     link TEXT,
-    categoria VARCHAR(20) NOT NULL DEFAULT 'diaria',
+    categoria TEXT NOT NULL DEFAULT 'diaria',
     data DATE NOT NULL DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS course_page (
-    id_course_page SERIAL PRIMARY KEY,
-    payload JSONB NOT NULL,
+    id_course_page INTEGER PRIMARY KEY AUTOINCREMENT,
+    payload TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS courses (
-    id_course SERIAL PRIMARY KEY,
-    title VARCHAR(150) NOT NULL,
+    id_course INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
     description TEXT,
     thumbnail TEXT,
-    status VARCHAR(30) DEFAULT 'Rascunho',
-    duration VARCHAR(50),
-    level VARCHAR(50),
+    status TEXT DEFAULT 'Rascunho',
+    duration TEXT,
+    level TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
