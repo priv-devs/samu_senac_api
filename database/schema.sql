@@ -14,10 +14,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
         ON DELETE RESTRICT
 );
 
-INSERT INTO tipo_usuario (tipo) VALUES ('user');
-INSERT INTO tipo_usuario (tipo) VALUES ('admin');
-INSERT INTO tipo_usuario (tipo) VALUES ('root');
-
 CREATE TABLE IF NOT EXISTS noticias (
     id_noticia SERIAL PRIMARY KEY,
     titulo VARCHAR(150),
