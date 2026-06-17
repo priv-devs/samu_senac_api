@@ -67,6 +67,13 @@ async function initDB() {
     `);
 
     await client.query(`
+        CREATE TABLE IF NOT EXISTS categorias (
+            id SERIAL PRIMARY KEY,
+            nome VARCHAR(50));
+
+        `);
+
+    await client.query(`
       INSERT INTO tipo_usuario (tipo)
       VALUES ('cliente'), ('admin')
       ON CONFLICT (tipo) DO NOTHING;

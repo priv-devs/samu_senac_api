@@ -1,0 +1,183 @@
+[01;34m.[0m
+├── a.txt
+├── database.sqlite
+├── [01;34m.git[0m
+│   ├── [01;34mbranches[0m
+│   ├── COMMIT_EDITMSG
+│   ├── config
+│   ├── description
+│   ├── FETCH_HEAD
+│   ├── HEAD
+│   ├── [01;34mhooks[0m
+│   │   ├── [01;32mapplypatch-msg.sample[0m
+│   │   ├── [01;32mcommit-msg.sample[0m
+│   │   ├── [01;32mfsmonitor-watchman.sample[0m
+│   │   ├── [01;32mpost-update.sample[0m
+│   │   ├── [01;32mpre-applypatch.sample[0m
+│   │   ├── [01;32mpre-commit.sample[0m
+│   │   ├── [01;32mpre-merge-commit.sample[0m
+│   │   ├── [01;32mprepare-commit-msg.sample[0m
+│   │   ├── [01;32mpre-push.sample[0m
+│   │   ├── [01;32mpre-rebase.sample[0m
+│   │   ├── [01;32mpre-receive.sample[0m
+│   │   ├── [01;32mpush-to-checkout.sample[0m
+│   │   ├── [01;32msendemail-validate.sample[0m
+│   │   └── [01;32mupdate.sample[0m
+│   ├── index
+│   ├── [01;34minfo[0m
+│   │   └── exclude
+│   ├── [01;34mlogs[0m
+│   │   ├── HEAD
+│   │   └── [01;34mrefs[0m
+│   │       ├── [01;34mheads[0m
+│   │       │   ├── [01;34mfeature[0m
+│   │       │   │   └── prisma
+│   │       │   ├── main
+│   │       │   ├── testing
+│   │       │   └── testing-sqlite
+│   │       ├── [01;34mremotes[0m
+│   │       │   └── [01;34morigin[0m
+│   │       │       ├── HEAD
+│   │       │       ├── testing
+│   │       │       └── testing-sqlite
+│   │       └── stash
+│   ├── [01;34mobjects[0m
+│   │   ├── [01;34m0b[0m
+│   │   │   └── e2196bbb2bc356a3036f85b9a6e8527bc30bbf
+│   │   ├── [01;34m17[0m
+│   │   │   └── 41bbd9d5ffc90f8f55b37876655653952424c7
+│   │   ├── [01;34m31[0m
+│   │   │   └── 351742fcc0df6a7c8f497d8c7c8a5c08c7debc
+│   │   ├── [01;34m35[0m
+│   │   │   └── d063845c19707af05a42755931dc8fdc362136
+│   │   ├── [01;34m3c[0m
+│   │   │   └── eed4bd51732496bc38e9ac94a67648caef93c4
+│   │   ├── [01;34m40[0m
+│   │   │   └── 3155ecbd56ef59c14fd3ba0250748bdd3401ee
+│   │   ├── [01;34m49[0m
+│   │   │   └── 80413e67c4d5f62f83071e4545bc4c839805d0
+│   │   ├── [01;34m51[0m
+│   │   │   └── d79f6bcd12ab48e062acdfec738a6501607457
+│   │   ├── [01;34m52[0m
+│   │   │   └── dc90140eab98b9372febe7362eb7f09537afd0
+│   │   ├── [01;34m54[0m
+│   │   │   └── 452a1061d5ee7b9afa7debfe5e68a7b897c880
+│   │   ├── [01;34m66[0m
+│   │   │   └── 35cf733d408988ee88dc3406cb0b8761e13d7c
+│   │   ├── [01;34m67[0m
+│   │   │   └── 88dadda8299e9137a03a75e0698bbc10e1f6af
+│   │   ├── [01;34m7b[0m
+│   │   │   └── 0035c0bfe038bba6a64d592860999721147dd4
+│   │   ├── [01;34m89[0m
+│   │   │   └── 17d27eb8a67120aff4430c8e838183d414b3f6
+│   │   ├── [01;34m8e[0m
+│   │   │   └── cd80f8b66916fe837b1fe6092f2b047e894c05
+│   │   ├── [01;34m90[0m
+│   │   │   ├── 1f3882fadec0b0d4af08092b07d2f592037379
+│   │   │   └── 952daf795b2a5ea75c0a97452f70df70864148
+│   │   ├── [01;34m91[0m
+│   │   │   └── ea2f4803ddc1dd05307c560114e37cba988414
+│   │   ├── [01;34ma2[0m
+│   │   │   └── c00f3cd1d1c8ea3ed88e64526b9bf2fbcf052d
+│   │   ├── [01;34ma4[0m
+│   │   │   └── 1307869cf1d3711e57727c7ce9f76b5e0253c0
+│   │   ├── [01;34ma5[0m
+│   │   │   └── 03a0cd1768bd728e0255e6e4941f3a82a397bf
+│   │   ├── [01;34mab[0m
+│   │   │   └── 35349529b75f7fb7c140d9a2d44fa4c574c8e2
+│   │   ├── [01;34mb1[0m
+│   │   │   └── 85174201db7d59f6e3c0dcec5280894d45d3b0
+│   │   ├── [01;34mb4[0m
+│   │   │   └── 4767c68ef96e65ebaffc63d240a9d2e5f38085
+│   │   ├── [01;34mc0[0m
+│   │   │   └── 0ed678597ce23d5a9fb69828d5b84037eb1070
+│   │   ├── [01;34mc1[0m
+│   │   │   └── 9288c59cc160d8984788faaa00ab8f5f5fd8d3
+│   │   ├── [01;34mce[0m
+│   │   │   └── bee43c12ade350512e1c901c0e3443ecd1021c
+│   │   ├── [01;34md3[0m
+│   │   │   └── 1fb6f6aebb35fac11dd9e01eac99127a9ca3e9
+│   │   ├── [01;34md4[0m
+│   │   │   └── 0b42d4b75106fba9f950850fcfc9e3198e1722
+│   │   ├── [01;34md8[0m
+│   │   │   └── 5bb8acfecdf339a68b91fb414abd8cb0aae2c4
+│   │   ├── [01;34me0[0m
+│   │   │   └── 291c74d80c91d54e52b909d2ef15a2995f223b
+│   │   ├── [01;34me4[0m
+│   │   │   └── 765d4c936e485739edd6b3ae5ff7b832a01688
+│   │   ├── [01;34me6[0m
+│   │   │   └── b47d3d2da42b889418a8d2f87a24f46af175b8
+│   │   ├── [01;34minfo[0m
+│   │   └── [01;34mpack[0m
+│   │       ├── pack-6affaee7ac7dbf5613cab10f8136b1829c115424.idx
+│   │       ├── pack-6affaee7ac7dbf5613cab10f8136b1829c115424.pack
+│   │       └── pack-6affaee7ac7dbf5613cab10f8136b1829c115424.rev
+│   ├── ORIG_HEAD
+│   ├── packed-refs
+│   └── [01;34mrefs[0m
+│       ├── [01;34mheads[0m
+│       │   ├── [01;34mfeature[0m
+│       │   │   └── prisma
+│       │   ├── main
+│       │   ├── testing
+│       │   └── testing-sqlite
+│       ├── [01;34mremotes[0m
+│       │   └── [01;34morigin[0m
+│       │       ├── HEAD
+│       │       ├── testing
+│       │       └── testing-sqlite
+│       ├── stash
+│       └── [01;34mtags[0m
+├── .gitignore
+├── jsconfig.json
+├── package.json
+├── package-lock.json
+├── README.md
+├── server.js
+└── [01;34msrc[0m
+    ├── [01;34mapp[0m
+    │   └── index.js
+    ├── [01;34mcontrollers[0m
+    │   ├── [01;34mcourse_page[0m
+    │   │   └── index.js
+    │   ├── [01;34mcourses[0m
+    │   │   └── index.js
+    │   ├── [01;34mnoticias[0m
+    │   │   └── index.js
+    │   ├── [01;34mnoticias_diarias[0m
+    │   │   └── index.js
+    │   ├── [01;34mtipoUsuario[0m
+    │   │   └── index.js
+    │   └── [01;34musers[0m
+    │       └── index.js
+    ├── [01;34mdatabase[0m
+    │   └── index.js
+    ├── [01;34mmodels[0m
+    │   ├── [01;34mcourse_page[0m
+    │   │   └── index.js
+    │   ├── [01;34mcourses[0m
+    │   │   └── index.js
+    │   ├── [01;34mnoticias[0m
+    │   │   └── index.js
+    │   ├── [01;34mnoticias_diarias[0m
+    │   │   └── index.js
+    │   ├── [01;34mtipoUsuario[0m
+    │   │   └── index.js
+    │   └── [01;34musers[0m
+    │       └── index.js
+    └── [01;34mroutes[0m
+        ├── [01;34mcourse_page[0m
+        │   └── index.js
+        ├── [01;34mcourses[0m
+        │   └── index.js
+        ├── index.js
+        ├── [01;34mnoticias[0m
+        │   └── index.js
+        ├── [01;34mnoticias_diarias[0m
+        │   └── index.js
+        ├── [01;34mtipoUsuario[0m
+        │   └── index.js
+        └── [01;34musers[0m
+            └── index.js
+
+76 directories, 105 files
