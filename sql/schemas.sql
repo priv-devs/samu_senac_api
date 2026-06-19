@@ -48,3 +48,23 @@ CREATE TABLE IF NOT EXISTS courses (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS sobre_trajetoria (
+    id SERIAL PRIMARY KEY,
+    tag VARCHAR(100) NOT NULL,
+    titulo VARCHAR(150) NOT NULL,
+    descricao TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sobre_equipe (
+    id SERIAL PRIMARY KEY,
+    tag VARCHAR(100) NOT NULL,
+    titulo VARCHAR(150) NOT NULL,
+    descricao TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sobre_cards_equipe (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    descricao TEXT NOT NULL
+);
