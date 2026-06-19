@@ -5,7 +5,6 @@ const noticiasDiariasController = require('./noticias_diarias/');
 const noticiasController = require('./noticias/');
 const coursePageController = require('./course_page/');
 const coursesController = require('./courses/');
-const sobreController = require('./sobre/');
 
 const routes = Router();
 
@@ -15,6 +14,5 @@ routes.use('/api/noticias', noticiasController);
 routes.use('/api/noticias-diarias', noticiasDiariasController);
 routes.use('/api/course-page', coursePageController);
 routes.use('/api/courses', coursesController);
-routes.use('/api/sobre', sobreController);
 
 module.exports = routes;
