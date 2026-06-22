@@ -1,7 +1,7 @@
 {
   "name": "samu_senac_api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API em Node.js com Express e PostgreSQL para cadastro de usuarios e tipos de usuario.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -18,5 +18,17 @@
     "morgan": "^1.10.1",
     "nodemon": "^3.1.14",
     "pg": "^8.20.0"
-  }
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^6.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/priv-devs/samu_senac_api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/priv-devs/samu_senac_api/issues"
+  },
+  "homepage": "https://github.com/priv-devs/samu_senac_api#readme"
 }
